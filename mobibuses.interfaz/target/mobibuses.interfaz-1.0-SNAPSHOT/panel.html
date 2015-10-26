@@ -1,0 +1,72 @@
+
+<style>
+      html, body {
+        height: 650px;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 430px;
+      }
+    </style>
+
+
+<html lang="en" ng-app="angularTodo">
+<head>
+	
+    
+<button name="prueba" id="prueba" onclick="prueba(); return false;"> prueba </button>
+
+Tranvia 
+<input type="text" name="nombreTranvia" id="nombreTranvia" >
+Emergencia
+<SELECT NAME="emergenciaTranvia" id="emergenciaTranvia" SIZE=1 onChange="javascript:alert('prueba');"> 
+<OPTION VALUE="1">Choque</OPTION>
+<OPTION VALUE="2">Temperatura</OPTION>
+<OPTION VALUE="3">Panico</OPTION>
+</SELECT>
+
+Valor
+<input type="text" name="valorTranvia" id="valorTranvia" >
+
+<button name="cambiarEstadoTranvia" id="cambiarEstadoTranvia" onclick="cambiarEstadoTranvia();return false"> Cambiar estado de Tranvia</button>
+
+    
+<button name="direccion" id="direccion" onclick="verMobibuses(); return false;"> ver mobibuses </button>
+<button name="direccion" id="direccion" onclick="verMobibusesMasCercanoUsuario(); return false;"> mobibus mas cercano a mi </button>
+<button name="generarReporte" id="generarReporte" onclick="generarReporte(); return false;"> generarReporte </button>
+
+ 
+    <div id="map" height="400"  ></div> 
+     <div id="directionsPanel" height="200">
+     <div id="reporte" height="200"  ></div> 
+    
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap"></script>
+    
+   
+  </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+	<script src="main.js"></script>
+        <script src="funciones.js"></script>
+</body>
+</html>
