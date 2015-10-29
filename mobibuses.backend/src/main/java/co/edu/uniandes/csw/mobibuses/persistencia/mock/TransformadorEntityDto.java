@@ -14,9 +14,11 @@ import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -136,18 +138,17 @@ public class TransformadorEntityDto {
                 
               String  nombreConductor="conductor"+i;
                
-                Tranvia x = new Tranvia("tranvia"+(i), ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto) ;
+                Tranvia x = new Tranvia("tranvia", ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto) ;
             
-                
-                    
-                entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityTranvia(x));
-                               
-               
-                
-            
-            
-            
-        }
+                TranviaEntity en=TransformadorEntityDto.getInstance().DtoAEntityTranvia(x);
+                entityManager.persist(en);
+          }
+            Query q = entityManager.createQuery("SELECT u FROM TranviaEntity u");
+            List<TranviaEntity> l = q.getResultList();
+            for (TranviaEntity tranvia:l){
+                tranvia.setNombre("tranvia"+tranvia.getId());
+                entityManager.refresh(tranvia);
+            }
         
     }
     public void crearVcubes(EntityManager entityManager){

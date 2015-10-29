@@ -10,6 +10,7 @@ package co.edu.uniandes.csw.mobibuses.dto;
  * @author fj.ricaurte10
  */
 public class Tranvia {
+    private long id ;
     
     private String nombre ;
     
@@ -32,8 +33,9 @@ public class Tranvia {
     private double tiempoTrayecto ;
     
     
-    public Tranvia(String nombreP, String lenaPc,double posicionLatitudP, double posicionLongitudP,int nivelChoqueP,int nivelTemperaturaP, int nivelPanicoP , double kilometrajeP , String nombreConductorP,double tiempoTrayectoP)
+    public Tranvia( String nombreP, String lenaPc,double posicionLatitudP, double posicionLongitudP,int nivelChoqueP,int nivelTemperaturaP, int nivelPanicoP , double kilometrajeP , String nombreConductorP,double tiempoTrayectoP)
     {
+        
      nombre=nombreP;
      
      nombreConductor=nombreConductorP;
@@ -84,6 +86,10 @@ public class Tranvia {
     public String getNombre()
     {
         return nombre;
+    }
+    public long getID()
+    {
+        return id;
     }
     
     public double getKilometraje()

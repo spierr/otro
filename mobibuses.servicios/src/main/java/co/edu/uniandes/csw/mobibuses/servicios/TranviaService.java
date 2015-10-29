@@ -80,7 +80,7 @@ public class TranviaService {
     public void cambiarCoordenadas(@PathParam("id") String id,@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2)
     {
         
-         //tranviaEjb.cambiarCoord(id,coordenada1,coordenada2);
+         tranviaEjb.cambiarCoord(id,coordenada1,coordenada2);
          
         
     }

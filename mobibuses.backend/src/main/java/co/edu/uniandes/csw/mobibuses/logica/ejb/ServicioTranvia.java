@@ -276,7 +276,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     public void cambiarCoord(String id, double co1, double co2) {
        
         
-          TranviaEntity tranvia =em.find(TranviaEntity.class, id);
+          TranviaEntity tranvia =em.find(TranviaEntity.class, Long.parseLong(id));
          tranvia.setPosicionLatitud(co1);
            tranvia.setPosicionLongitud(co2);
         em.persist(tranvia);
