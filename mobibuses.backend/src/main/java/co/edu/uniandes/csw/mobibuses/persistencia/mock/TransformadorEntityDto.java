@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.mobibuses.dto.EstacionVcub;
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.dto.Ruta;
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
+import co.edu.uniandes.csw.mobibuses.dto.User;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,6 +43,38 @@ public class TransformadorEntityDto {
     }
     
     
+    public void crearUsuarios(EntityManager entityManager)
+    {
+        System.out.println("Se ha iniciado el entity manager Hitch"+entityManager.toString());
+        
+        UserEntity admin = new UserEntity();
+        admin.setId(new Long(0));
+        admin.setPassword(User.ADMIN);
+        admin.setRol(User.ADMIN);
+        admin.setToken(null);
+        admin.setUsuario(User.ADMIN);
+        UserEntity user = new UserEntity();
+        user.setId(new Long(1));
+        user.setPassword("pollitas");
+        user.setRol(User.USER);
+        user.setToken(null);
+        user.setUsuario(User.USER);
+        
+        try {
+                         
+            entityManager.persist(admin);
+            entityManager.persist(user);
+          
+            System.out.println("Se persistio correctamente mobibus");
+           
+        } catch (Exception t) {
+            System.out.println("Se toteo "+t.getMessage());
+     
+            t.printStackTrace();
+            
+        }
+        
+    }
     
     public void crearMobibibuses(EntityManager entityManager){
                    
@@ -325,6 +358,23 @@ public class TransformadorEntityDto {
      {
          Tranvia dto = new Tranvia(entity.getNombre(), entity.getLinea(), entity.getPosicionLatitud(), entity.getPosicionLongitud(), entity.getNivelChoque(), entity.getNivelTemperatura(), entity.getNivelPanico(), entity.getKilometraje(), entity.getNombreConductor(), entity.getTiempoTrayecto());
          return dto;
+     }
+
+
+    public User EntityADtoUser(UserEntity te) {
+        User dto = new User( te.getId(), te.getUsuario(), te.getPassword(), te.getRol(), te.getToken());
+        return dto;
+    }
+    
+    public UserEntity DtoAEntityUser (User dto)
+     {
+                UserEntity t = new UserEntity();
+                t.setId(dto.getId());
+                t.setPassword(dto.getPassword());
+                t.setRol(dto.getRol());
+                t.setToken(dto.getToken());
+                t.setUsuario(dto.getUsuario());
+                return t;
      }
     
 }

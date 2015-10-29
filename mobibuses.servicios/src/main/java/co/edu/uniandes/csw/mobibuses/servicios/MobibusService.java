@@ -25,6 +25,8 @@ import javax
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -47,20 +49,20 @@ public class MobibusService {
      @GET
     @Path("mobibuses/")
      
-    public List<Mobibus> getTodosLosUsuarios() {
+    public List<Mobibus> getTodosLosUsuarios(@Context HttpHeaders headers) {
         
-      
-       return mobibusEjb.darMobibuses();
+      String token = headers.getRequestHeader("token").get(0);
+       return mobibusEjb.darMobibuses(token );
  
     }
     
     @GET
     @Path("mobibuses/{coordenada1}/{coordenada2}")
     
-    public Mobibus darMobiBusMasCercanoA(@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2)
+    public Mobibus darMobiBusMasCercanoA(@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2,@Context HttpHeaders headers)
     {
-        
-        return mobibusEjb.darMobibusMasCercano(coordenada1, coordenada2);
+        String token = headers.getRequestHeader("token").get(0);
+        return mobibusEjb.darMobibusMasCercano(coordenada1, coordenada2,token );
         
     }
     
@@ -70,20 +72,22 @@ public class MobibusService {
     
     @PUT
     @Path("mobibuses/alquilar/{id}")
-    public void alquilarMobibus(@PathParam("id") int id)
+    public void alquilarMobibus(@PathParam("id") int id,@Context HttpHeaders headers)
     {
+        String token = headers.getRequestHeader("token").get(0);
         try {
-            mobibusEjb.alquilarMobibus(id);
+            mobibusEjb.alquilarMobibus(id,token );
         } catch (OperacionInvalidaException ex) {
             Logger.getLogger(MobibusService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
      @PUT
     @Path("mobibuses/liberar/{id}")
-    public void liberarMobibus(@PathParam("id") int id)
+    public void liberarMobibus(@PathParam("id") int id,@Context HttpHeaders headers)
     {
+        String token = headers.getRequestHeader("token").get(0);
         try {
-            mobibusEjb.liberarMobibus(id);
+            mobibusEjb.liberarMobibus(id,token );
         } catch (OperacionInvalidaException ex) {
             Logger.getLogger(MobibusService.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -91,55 +95,58 @@ public class MobibusService {
     
     @POST 
     @Path("mobibuses/agregarRuta/{id}/{distancia}/{tiempo}")
-    public void agregarRuta(@PathParam("id") int id,@PathParam("distancia") int pDist,@PathParam("tiempo") int pTiempo)
+    public void agregarRuta(@PathParam("id") int id,@PathParam("distancia") int pDist,@PathParam("tiempo") int pTiempo,@Context HttpHeaders headers)
     {
-        mobibusEjb.agregarRuta(id, pDist, pTiempo); 
+        String token = headers.getRequestHeader("token").get(0);
+        mobibusEjb.agregarRuta(id, pDist, pTiempo,token ); 
     }
     
     @PUT 
     @Path("mobibuses/eliminarRuta/{id}/{id2}")
-    public void eliminarRuta(@PathParam("id") int idMobibus,@PathParam("id2") int idRuta)
+    public void eliminarRuta(@PathParam("id") int idMobibus,@PathParam("id2") int idRuta,@Context HttpHeaders headers)
     {
-        mobibusEjb.eliminarRuta(idMobibus, idRuta); 
+        String token = headers.getRequestHeader("token").get(0);
+        mobibusEjb.eliminarRuta(idMobibus, idRuta,token ); 
     }
     
     @GET
     @Path("mobibuses/reporteRutas/{id}")
-    public String generarReporteRutas(@PathParam("id") int id)
+    public String generarReporteRutas(@PathParam("id") int id,@Context HttpHeaders headers)
     {
-        
-        return mobibusEjb.darReporteRutas(id);
+        String token = headers.getRequestHeader("token").get(0);
+        return mobibusEjb.darReporteRutas(id,token );
         
     }
     
       @PUT
     @Path("mobibus/{id}/{longitud}_{latitud}")
-      public Mobibus modificarPos(@PathParam("id") int idest,@PathParam("longitud")double longi,@PathParam("latitud") double lati){
+      public Mobibus modificarPos(@PathParam("id") int idest,@PathParam("longitud")double longi,@PathParam("latitud") double lati,@Context HttpHeaders headers){
           
-            
+          String token = headers.getRequestHeader("token").get(0);  
          for (int i = 0; i < 1000; i++) {
             for (int j = 0; j < 1000; j++) {
                 System.out.println(i+j);
         } 
         }
-          return mobibusEjb.cambiarPosicion(idest, longi, lati);
+          return mobibusEjb.cambiarPosicion(idest, longi, lati,token );
           
       }
       
         @PUT
     @Path("mobibus/{id}/{kilo}")
-      public Mobibus modificarPos(@PathParam("id") int idest,@PathParam("kilo")double kilo){
-          return mobibusEjb.cambiarKilo(idest, kilo);
+      public Mobibus modificarPos(@PathParam("id") int idest,@PathParam("kilo")double kilo,@Context HttpHeaders headers){
+          String token = headers.getRequestHeader("token").get(0);
+          return mobibusEjb.cambiarKilo(idest, kilo,token );
       }
       
       
         @GET
     @Path("mobibusesBon/{coordenada1}/{coordenada2}")
     
-    public List<Mobibus> darMobiBusMasCercanoBono(@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2)
+    public List<Mobibus> darMobiBusMasCercanoBono(@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2,@Context HttpHeaders headers)
     {
-        
-        return mobibusEjb.darMobibusMasCercanoBono(coordenada1, coordenada2);
+        String token = headers.getRequestHeader("token").get(0);
+        return mobibusEjb.darMobibusMasCercanoBono(coordenada1, coordenada2,token );
         
     }
     

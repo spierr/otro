@@ -8,6 +8,7 @@
     <class>co.edu.uniandes.csw.mobibuses.persistencia.mock.RutaEntity</class>
     <class>co.edu.uniandes.csw.mobibuses.persistencia.mock.TranviaEntity</class>
     <class>co.edu.uniandes.csw.mobibuses.persistencia.mock.VcubEntity</class>
+    <class>co.edu.uniandes.csw.mobibuses.persistencia.mock.UserEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

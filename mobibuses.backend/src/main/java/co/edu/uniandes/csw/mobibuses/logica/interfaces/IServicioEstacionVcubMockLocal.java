@@ -18,25 +18,28 @@ import javax.ejb.Local;
 @Local
 public interface IServicioEstacionVcubMockLocal 
 {
-    public List<EstacionVcub> darEstacionesVcub();
+    public List<EstacionVcub> darEstacionesVcub( String token);
     
-    public List<Vcub> darVcubesEstacion(int IDestacion);
     
-    public List<Vcub> darTodosVcub();
+    public List<Vcub> darVcubesEstacion(int IDestacion, String token);
     
-    public Vcub alquilarVcub(int IDestacion)throws OperacionInvalidaException;
+    public List<Vcub> darTodosVcub(String token);
     
-    public Vcub liberarVcub(int IDestacion,int IDdevolver) throws OperacionInvalidaException;
+    public List<Vcub> darTodosVcub1();
     
-    public void reducirVcubesTodas();
+    public Vcub alquilarVcub(int IDestacion, String token)throws OperacionInvalidaException;
     
-    public void reducirVcubesEspecifica(int IDestacion);
+    public Vcub liberarVcub(int IDestacion,int IDdevolver, String token) throws OperacionInvalidaException;
     
-    public List<Vcub> darVcubesDisponiblesEstacion(int IDestacion);
+    public void reducirVcubesTodas( String token);
     
-    public List<Vcub> darVcubesOcupadosEstacion(int IDestacion);
+    public void reducirVcubesEspecifica(int IDestacion, String token);
     
-    public List<Vcub> darVcubesNoDisponiblesEstacion(int IDestacion);
+    public List<Vcub> darVcubesDisponiblesEstacion(int IDestacion, String token);
     
-    public Vcub modificarPosVcub(int idVcub, double longitud, double latitud);
+    public List<Vcub> darVcubesOcupadosEstacion(int IDestacion, String token);
+    
+    public List<Vcub> darVcubesNoDisponiblesEstacion(int IDestacion, String token);
+    
+    public Vcub modificarPosVcub(int idVcub, double longitud, double latitud, String token);
 }

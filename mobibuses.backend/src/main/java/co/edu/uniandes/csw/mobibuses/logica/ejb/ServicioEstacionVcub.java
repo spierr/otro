@@ -45,13 +45,20 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     
     public ServicioEstacionVcub() {
         em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-         if(darTodosVcub().size()==0)
+         if(darTodosVcub1().size()==0)
           TransformadorEntityDto.getInstance().crearVcubes(em);
     }
      
     @Override
-    public List<EstacionVcub> darEstacionesVcub()
+    public List<EstacionVcub> darEstacionesVcub(String token)
     {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return new ArrayList();
+     }
+     else
+     {
             Query q = em.createQuery("SELECT u from EstacionVcubEntity u");
             List<EstacionVcubEntity> estaciones = q.getResultList();
             ArrayList<EstacionVcub> dtos = new ArrayList();
@@ -59,10 +66,18 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
                 dtos.add(TransformadorEntityDto.getInstance().EntityADtoEstacionVcube(est));
             }
             return dtos;
+     }
     }
 
     @Override
-    public List<Vcub> darVcubesEstacion(int IDestacion) {
+    public List<Vcub> darVcubesEstacion(int IDestacion, String token) {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return new ArrayList();
+     }
+     else
+     {
         Query q = em.createQuery("SELECT v from VcubEntity v WHERE v.estacionVcub.id = "+IDestacion);
         List<VcubEntity> vce =q.getResultList();
         ArrayList<Vcub> dtos = new ArrayList();
@@ -71,11 +86,32 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
         }
         return dtos;
- 
+     }
     }
 
     @Override
-    public List<Vcub> darTodosVcub() {
+    public List<Vcub> darTodosVcub(String token) 
+    {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return new ArrayList();
+     }
+     else
+     {
+          Query q = em.createQuery("SELECT v from VcubEntity v" );
+        List<VcubEntity> vce =q.getResultList();
+        ArrayList<Vcub> dtos = new ArrayList();
+        for(VcubEntity vc : vce)
+        {
+            dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
+        }
+        return dtos;
+     }
+    }
+    
+     @Override
+    public List<Vcub> darTodosVcub1() {
           Query q = em.createQuery("SELECT v from VcubEntity v" );
         List<VcubEntity> vce =q.getResultList();
         ArrayList<Vcub> dtos = new ArrayList();
@@ -87,8 +123,15 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     }
 
     @Override
-    public Vcub alquilarVcub(int IDestacion) throws OperacionInvalidaException
+    public Vcub alquilarVcub(int IDestacion, String token) throws OperacionInvalidaException
     {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return null;
+     }
+     else
+     {
         Long ide = new Long(IDestacion);
         EstacionVcubEntity este = em.find(EstacionVcubEntity.class, ide);
        // EstacionVcub est = TransformadorEntityDto.getInstance().EntityADtoEstacionVcube(este);
@@ -123,12 +166,19 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
                      }
                  }
                  return resp;
-                
+     } 
     }
 
     @Override
-    public Vcub liberarVcub(int IDestacion,int IDdevolver) throws OperacionInvalidaException 
+    public Vcub liberarVcub(int IDestacion,int IDdevolver, String token) throws OperacionInvalidaException 
     {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return null;
+     }
+     else
+     {
         Long ide = new Long( IDestacion);
         EstacionVcubEntity est = em.find(EstacionVcubEntity.class, ide);
         VcubEntity vcd = em.find(VcubEntity.class,new Long( IDdevolver));
@@ -173,10 +223,17 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             throw new OperacionInvalidaException("No de devolvio");
         }
         return devuelto;
+     }
     }
 
     @Override
-    public void reducirVcubesTodas() {
+    public void reducirVcubesTodas( String token) {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+     }
+     else
+     {
         Query q = em.createQuery("SELECT u from EstacionVcubEntity u");
             List<EstacionVcubEntity> estaciones = q.getResultList();
             {
@@ -200,10 +257,18 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             em.persist(est);
         }
             }
+     }
     }
 
     @Override
-    public void reducirVcubesEspecifica(int IDestacion) {
+    public void reducirVcubesEspecifica(int IDestacion, String token) {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+        
+     }
+     else
+     {
          EstacionVcubEntity est = em.find(EstacionVcubEntity.class,new Long( IDestacion));
                     int numero30 = (int) (est.getvCubs().size()*(0.3));
             int j = 0 ;
@@ -222,12 +287,20 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             }
             est.setvCubs(new HashSet(vcubes));
             em.persist(est);
+     }
     }
 
     @Override
-    public List<Vcub> darVcubesDisponiblesEstacion(int IDestacion) {
+    public List<Vcub> darVcubesDisponiblesEstacion(int IDestacion, String token) {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return new ArrayList();
+     }
+     else
+     {
         ArrayList<Vcub> sol = new ArrayList<Vcub>();
-        List<Vcub> arr = darVcubesEstacion(IDestacion);
+        List<Vcub> arr = darVcubesEstacion(IDestacion, token);
         for (Vcub arr1 : arr)
         {
             if(arr1.isOcupado().equals(Vcub.DISPONIBLE))
@@ -236,13 +309,21 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             }
         }
         return sol;
+     }
     }
 
     @Override
-    public List<Vcub> darVcubesOcupadosEstacion(int IDestacion)
+    public List<Vcub> darVcubesOcupadosEstacion(int IDestacion, String token)
     {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return new ArrayList();
+     }
+     else
+     {
         ArrayList<Vcub> sol = new ArrayList<Vcub>();
-        List<Vcub> arr = darVcubesEstacion(IDestacion);
+        List<Vcub> arr = darVcubesEstacion(IDestacion,  token);
         for (Vcub arr1 : arr)
         {
             if(arr1.isOcupado().equals(Vcub.OCUPADO))
@@ -251,13 +332,21 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             }
         }
         return sol;
+     }
     }
 
     @Override
-    public List<Vcub> darVcubesNoDisponiblesEstacion(int IDestacion) {
+    public List<Vcub> darVcubesNoDisponiblesEstacion(int IDestacion, String token) {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return new ArrayList();
+     }
+     else
+     {
 
     ArrayList<Vcub> sol = new ArrayList<Vcub>();
-        List<Vcub> arr = darVcubesEstacion(IDestacion);
+        List<Vcub> arr = darVcubesEstacion(IDestacion, token);
         for (Vcub arr1 : arr)
         {
             if(arr1.isOcupado().equals(Vcub.NO_DISPONIBLE))
@@ -266,11 +355,19 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             }
         }
         return sol;
+     }
     }
 
     @Override
-    public Vcub modificarPosVcub(int idVcub, double longitud, double latitud) 
+    public Vcub modificarPosVcub(int idVcub, double longitud, double latitud, String token) 
     {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return null;
+     }
+     else
+     {
         Long idvc = new Long(idVcub);
         VcubEntity vc = em.find(VcubEntity.class, idvc);
         EstacionVcubEntity evc = em.find(EstacionVcubEntity.class, new Long(vc.getEstacionVcub().getId()));
@@ -290,7 +387,9 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             }
         }
         return r;
+     }
     }
+
 
 
     

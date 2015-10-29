@@ -38,17 +38,13 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     public ServicioTranvia()
     {
         em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-        if(darTranvias().size()==0)
+        if(darTranvias1().size()==0)
           TransformadorEntityDto.getInstance().crearTranvias(em);
   
     }
     
-    
-    
-    @Override
-    
-    
-    public List<Tranvia> darTranvias() 
+
+    public List<Tranvia> darTranvias1() 
     {
     Query q = em.createQuery("SELECT u FROM TranviaEntity u");
      List<TranviaEntity> l = q.getResultList();
@@ -60,10 +56,38 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
      return ltr;
     
     }
+    
+    public List<Tranvia> darTranvias(String token) 
+    {
+     Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         ArrayList<Tranvia> ltr = new ArrayList();
+         return ltr;
+     }
+     else
+     {
+    Query q = em.createQuery("SELECT u FROM TranviaEntity u");
+     List<TranviaEntity> l = q.getResultList();
+     ArrayList<Tranvia> ltr = new ArrayList();
+     for(TranviaEntity te: l)
+     {
+         ltr.add(TransformadorEntityDto.getInstance().EntityADtoTranvia(te));
+     }
+     return ltr;
+     }
+     
+    
+    }
 
     @Override
-    public void cambiarEstado(String id, int emergencia, int valor) {
-       
+    public void cambiarEstado(String id, int emergencia, int valor, String token) {
+        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+     }
+     else
+     {
    TranviaEntity tranvia =em.find(TranviaEntity.class, id);
          
          //modifico el nivel de choque
@@ -86,14 +110,21 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
             
         }
         em.persist(tranvia);
+     }
     }
 
     @Override
-    public String generarReporte() {
-    
+    public String generarReporte(String token) {
+      Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+         return "Error de autenticaciòn";
+     }
+     else
+     {
     String rta="";
     
-    List<Tranvia> lista =darTranvias();
+    List<Tranvia> lista =darTranvias1();
     
     Tranvia conductorMasEFectivoA=null;
     Tranvia conductorMenosEFectivoA=null;
@@ -223,7 +254,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
             }
         }
         
-        
+    
     }
     rta+="El conductor mas efectivo es "+ conductorMasEFectivoA.getNombre() +" con el tranvia" + conductorMasEFectivoA.getNombre()+ " con un tiempo de " + conductorMasEFectivoA.getTimepoPromedio()+"<p>";
     
@@ -269,18 +300,22 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
    
    
     return rta ;
-    
+     }
     }
 
     @Override
-    public void cambiarCoord(String id, double co1, double co2) {
-       
-        
+    public void cambiarCoord(String id, double co1, double co2, String token) {
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     if(qu.getResultList().size()==0)
+     {
+     }
+     else
+     {
           TranviaEntity tranvia =em.find(TranviaEntity.class, Long.parseLong(id));
          tranvia.setPosicionLatitud(co1);
            tranvia.setPosicionLongitud(co2);
         em.persist(tranvia);
-        
+     }
         
     }
 

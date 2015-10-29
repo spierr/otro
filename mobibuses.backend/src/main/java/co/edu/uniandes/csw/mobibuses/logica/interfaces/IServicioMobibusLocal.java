@@ -21,24 +21,27 @@ import javax.ejb.Local;
 @Local
 
 public interface IServicioMobibusLocal {
-     public List<Mobibus> darMobibuses();
+    
+    public List<Mobibus> darMobibuses(String token);
+    
+     public List<Mobibus> darMobibuses1();
      
-     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2);
+     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2, String token);
      
-      public List<Mobibus> darMobibusMasCercanoBono(double cordenada1, double cordenada2);
+      public List<Mobibus> darMobibusMasCercanoBono(double cordenada1, double cordenada2, String token);
      
-      public void alquilarMobibus(int id)  throws OperacionInvalidaException;
+      public void alquilarMobibus(int id,String token)  throws OperacionInvalidaException;
       
-      public void liberarMobibus(int id) throws OperacionInvalidaException;
+      public void liberarMobibus(int id,String token) throws OperacionInvalidaException;
       
-      public void agregarRuta(int idMobibus, int pDist, int Ptiempo);
+      public void agregarRuta(int idMobibus, int pDist, int Ptiempo,String token);
       
-      public void eliminarRuta(int idMobibus, int idRuta);
+      public void eliminarRuta(int idMobibus, int idRuta,String token);
       
-      public String darReporteRutas(int id);
+      public String darReporteRutas(int id,String token);
       
-      public Mobibus cambiarPosicion(int id,double longi , double lat);
+      public Mobibus cambiarPosicion(int id,double longi , double lat,String token);
       
-      public Mobibus cambiarKilo(int id,double kilo);
+      public Mobibus cambiarKilo(int id,double kilo,String token);
      
 }

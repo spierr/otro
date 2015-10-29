@@ -18,12 +18,14 @@ import javax.ejb.Local;
 
 public interface IServicioTranviaLocal {
     
-    public List<Tranvia> darTranvias();
+    public List<Tranvia> darTranvias(String token);
     
-    public void cambiarEstado(String id, int emergencia , int valor);
+    public void cambiarEstado(String id, int emergencia , int valor, String token);
     
-    public String generarReporte();
+    public String generarReporte(String token);
     
-    public void cambiarCoord(String id , double co1 , double co2);
+    public void cambiarCoord(String id , double co1 , double co2, String token);
+    
+     public List<Tranvia> darTranvias1() ;
     
 }
