@@ -224,27 +224,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      {
         Query q = em.createQuery("SELECT u from EstacionVcubEntity u");
             List<EstacionVcubEntity> estaciones = q.getResultList();
-            {
-        for (EstacionVcubEntity est : estaciones) {
-            int numero30 = (int) (est.getvCubs().size()*(0.3));
-            int j = 0 ;
-            int index = 0 ;
-            List<VcubEntity> vcubes = em.createQuery(VCUBSQL+est.getId() ).getResultList();
-            while(j<=numero30 && index<vcubes.size())
-            {
-                VcubEntity actual = vcubes.get(index);
-                if(actual.getOcupado().equals(Vcub.DISPONIBLE))
-                {
-                    j++;
-                    actual.setOcupado(Vcub.NO_DISPONIBLE);
-                    em.persist(actual);
-                }
-                index++;
-            }
-            est.setvCubs(new HashSet(vcubes));
-            em.persist(est);
-        }
-            }
+            reducirVcubsAuxiliar(estaciones);
      }
     }
 
@@ -374,7 +354,27 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
 
+    private void reducirVcubsAuxiliar(List<EstacionVcubEntity> estaciones) {
 
-
-    
+        for (EstacionVcubEntity est : estaciones) {
+            int numero30 = (int) (est.getvCubs().size()*(0.3));
+            int j = 0 ;
+            int index = 0 ;
+            List<VcubEntity> vcubes = em.createQuery(VCUBSQL+est.getId() ).getResultList();
+            while(j<=numero30 && index<vcubes.size())
+            {
+                VcubEntity actual = vcubes.get(index);
+                if(actual.getOcupado().equals(Vcub.DISPONIBLE))
+                {
+                    j++;
+                    actual.setOcupado(Vcub.NO_DISPONIBLE);
+                    em.persist(actual);
+                }
+                index++;
+            }
+            est.setvCubs(new HashSet(vcubes));
+            em.persist(est);
+        }
+             
+        }   
 }
