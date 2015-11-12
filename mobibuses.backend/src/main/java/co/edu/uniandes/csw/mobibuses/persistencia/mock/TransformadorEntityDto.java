@@ -5,8 +5,6 @@
  */
 package co.edu.uniandes.csw.mobibuses.persistencia.mock;
 
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.EstacionVcubEntity;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.EstacionVcubEntity;
 import co.edu.uniandes.csw.mobibuses.dto.EstacionVcub;
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.dto.Ruta;
@@ -17,7 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.ejb.Stateless;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -45,8 +44,7 @@ public class TransformadorEntityDto {
     
     public void crearUsuarios(EntityManager entityManager)
     {
-        System.out.println("Se ha iniciado el entity manager Hitch"+entityManager.toString());
-        
+           
         UserEntity admin = new UserEntity();
         admin.setId(new Long(0));
         admin.setPassword(User.ADMIN);
@@ -64,14 +62,10 @@ public class TransformadorEntityDto {
                          
             entityManager.persist(admin);
             entityManager.persist(user);
-          
-            System.out.println("Se persistio correctamente mobibus");
-           
-        } catch (Exception t) {
-            System.out.println("Se toteo "+t.getMessage());
-     
-            t.printStackTrace();
-            
+
+        } catch (Exception exp) 
+        {
+             Logger.getLogger(TransformadorEntityDto.class.getName()).log(Level.SEVERE, null, exp);
         }
         
     }
@@ -102,14 +96,10 @@ public class TransformadorEntityDto {
                          
             entityManager.persist(mo);
            
-          
-            System.out.println("Se persistio correctamente mobibus");
-           
-        } catch (Exception t) {
-            System.out.println("Se toteo "+t.getMessage());
-     
-            t.printStackTrace();
-            
+                    
+        } catch (Exception exp) {
+             Logger.getLogger(TransformadorEntityDto.class.getName()).log(Level.SEVERE, null, exp);
+
         }
                   
             
@@ -202,14 +192,10 @@ public class TransformadorEntityDto {
                 
                       try {
             entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityEstacionVcube(nueva));
-           
-            System.out.println("Se persistio correctamente estacionmes");
-           
-        } catch (Exception t) {
-            System.out.println("Se toteo "+t.getMessage());
-     
-            t.printStackTrace();
-            
+                      
+        } catch (Exception exp) {
+             Logger.getLogger(TransformadorEntityDto.class.getName()).log(Level.SEVERE, null, exp);
+
         }
                
             }
@@ -245,12 +231,10 @@ public class TransformadorEntityDto {
                           vce.setEstacionVcub(entityManager.find(EstacionVcubEntity.class,new Long(actual.getId())));
                           vce.setId(nuevo.getId());
             entityManager.persist(vce);
-            System.out.println("Se persistio correctamente vcub");
            
-        } catch (Exception t) {
-            System.out.println("Se toteo "+t.getMessage());
-     
-            t.printStackTrace();
+        } catch (Exception exp) {
+             Logger.getLogger(TransformadorEntityDto.class.getName()).log(Level.SEVERE, null, exp);
+
             
         }
                

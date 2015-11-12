@@ -6,25 +6,18 @@
 package co.edu.uniandes.csw.mobibuses.logica.ejb;
 
 import co.edu.uniandes.csw.mobibuses.dto.EstacionVcub;
-import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioEstacionVcubMockLocal;
-import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.EstacionVcubEntity;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.MobiBusEntity;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.VcubEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import javax.annotation.PostConstruct;
 import javax.ejb.Local;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -45,7 +38,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     
     public ServicioEstacionVcub() {
         em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-         if(darTodosVcub1().size()==0)
+         if(darTodosVcub1().isEmpty())
           TransformadorEntityDto.getInstance().crearVcubes(em);
     }
      
@@ -53,7 +46,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     public List<EstacionVcub> darEstacionesVcub(String token)
     {
          Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if( qu.getResultList().isEmpty())
      {
          return new ArrayList();
      }
@@ -61,7 +54,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      {
             Query q = em.createQuery("SELECT u from EstacionVcubEntity u");
             List<EstacionVcubEntity> estaciones = q.getResultList();
-            ArrayList<EstacionVcub> dtos = new ArrayList();
+            List<EstacionVcub> dtos = new ArrayList();
             for (EstacionVcubEntity est : estaciones) {
                 dtos.add(TransformadorEntityDto.getInstance().EntityADtoEstacionVcube(est));
             }
@@ -72,7 +65,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public List<Vcub> darVcubesEstacion(int IDestacion, String token) {
          Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if( qu.getResultList().isEmpty())
      {
          return new ArrayList();
      }
@@ -80,7 +73,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      {
         Query q = em.createQuery("SELECT v from VcubEntity v WHERE v.estacionVcub.id = "+IDestacion);
         List<VcubEntity> vce =q.getResultList();
-        ArrayList<Vcub> dtos = new ArrayList();
+        List<Vcub> dtos = new ArrayList();
         for(VcubEntity vc : vce)
         {
             dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
@@ -93,7 +86,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     public List<Vcub> darTodosVcub(String token) 
     {
          Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if( qu.getResultList().isEmpty())
      {
          return new ArrayList();
      }
@@ -101,7 +94,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      {
           Query q = em.createQuery("SELECT v from VcubEntity v" );
         List<VcubEntity> vce =q.getResultList();
-        ArrayList<Vcub> dtos = new ArrayList();
+        List<Vcub> dtos = new ArrayList();
         for(VcubEntity vc : vce)
         {
             dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
@@ -126,7 +119,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     public Vcub alquilarVcub(int IDestacion, String token) throws OperacionInvalidaException
     {
          Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"' ");
-     if(qu.getResultList().size()==0)
+     if( qu.getResultList().isEmpty())
      {
          return null;
      }
@@ -134,7 +127,6 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      {
         Long ide = new Long(IDestacion);
         EstacionVcubEntity este = em.find(EstacionVcubEntity.class, ide);
-       // EstacionVcub est = TransformadorEntityDto.getInstance().EntityADtoEstacionVcube(este);
         Vcub resp = null;
         List<VcubEntity> vcubes = em.createQuery("SELECT v from VcubEntity v WHERE  v.estacionVcub.id = "+ide ).getResultList();
          for (VcubEntity actual : vcubes) {
