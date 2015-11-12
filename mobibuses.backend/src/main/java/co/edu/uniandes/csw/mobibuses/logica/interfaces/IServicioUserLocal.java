@@ -16,12 +16,32 @@ import javax.ejb.Local;
 @Local
 public interface IServicioUserLocal {
     
-
+/**
+ * interface
+ * @return 
+ */
     public List<User> darUsers();
+    
+    
+    /**
+     * interface
+     * @param u 
+     */
     
     public void registrarUsuario(User u);
     
+    /**
+     * interface
+     * @param u 
+     */
+    
     public void modificarUsuario(User u);
+    
+    /**
+     * interface
+     * @param u
+     * @return 
+     */
     
     public String login(User u);
     
