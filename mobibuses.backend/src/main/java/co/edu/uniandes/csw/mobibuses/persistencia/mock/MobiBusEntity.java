@@ -25,7 +25,7 @@ public class MobiBusEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     
     private String nombre ;
     
@@ -118,5 +118,10 @@ public class MobiBusEntity implements Serializable {
     public String toString() {
         return "co.edu.uniandes.csw.mobibuses.persistencia.mock.MobiBusEntity[ id=" + id + " ]";
     }
-    
+     @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
 }
