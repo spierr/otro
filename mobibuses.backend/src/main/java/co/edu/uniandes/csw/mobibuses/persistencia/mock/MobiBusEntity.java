@@ -5,9 +5,7 @@
  */
 package co.edu.uniandes.csw.mobibuses.persistencia.mock;
 
-import co.edu.uniandes.csw.mobibuses.dto.Ruta;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Set;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;

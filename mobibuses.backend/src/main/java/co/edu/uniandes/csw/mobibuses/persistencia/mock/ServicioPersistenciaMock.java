@@ -25,6 +25,8 @@ import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMock
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -76,8 +78,8 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         try {
             entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
             System.out.println("Se ha iniciado el entity manager Cristian"+entityManager.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception exp) {
+           Logger.getLogger(ServicioPersistenciaMock.class.getName()).log(Level.SEVERE, null, exp);
         }
     } 
     
@@ -162,63 +164,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     @Override
     public void delete(Object obj) throws OperacionInvalidaException
     {
-//        if (obj instanceof Ruta)
-//        {
-//            Vendedor vendedorABorrar = (Vendedor) obj;
-//
-//            for (int e = 0; e < vendedores.size(); e++)
-//            {
-//                Vendedor ven = (Vendedor) vendedores.get(e);
-//                if (ven.getIdentificacion() == vendedorABorrar.getIdentificacion())
-//                {
-//                    vendedores.remove(e);
-//                    break;
-//                }
-//            }
-//
-//        } 
-//        else if (obj instanceof Mobibus)
-//        {
-//            Mueble mueble;
-//            Mueble eliminar = (Mueble) obj;
-//            for (int i = 0; i < muebles.size(); i++)
-//            {
-//                mueble = muebles.get(i);
-//                if (eliminar.getReferencia() == mueble.getReferencia())
-//                {
-//                    muebles.remove(i);
-//                    break;
-//                }
-//
-//            }
-//
-//        } 
-//        else if (obj instanceof Tranvia)
-//        {
-//            Usuario usuarioABorrar = (Usuario) obj;
-//            for (RegistroVenta rv : registrosVentas)
-//            {
-//                if (rv.getComprador().getLogin().equals(usuarioABorrar.getLogin()))
-//                {
-//                    System.out.print("no borrado");
-//                    throw new OperacionInvalidaException("El usuario ha realizado comprar y por lo tanto no puede ser eliminado del sistema.");
-//                }
-//            }
-//            if (usuarioABorrar != null && usuarioABorrar.getLogin() != null)
-//            {
-//                for (int e = 0; e < usuarios.size(); e++)
-//                {
-//                    Usuario ven = (Usuario) usuarios.get(e);
-//                    if (ven.getLogin().equals(usuarioABorrar.getLogin()))
-//                    {
-//                        usuarios.remove(e);
-//                        System.out.print("borrado");
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//           else 
+
         if (obj instanceof Vcub)
         {
             Vcub eliminar = (Vcub) obj;
@@ -257,22 +203,13 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     @Override
     public List findAll(Class c)
     {
-        
-         System.out.println("Este es eol entity"+entityManager.toString());
-        //TransformadorEntityDto.getInstance().crearMobibibuses(entityManager);
         TransformadorEntityDto.getInstance().crearTranvias(entityManager);
-        //TransformadorEntityDto.getInstance().crearVcubes(entityManager);
+
         entityManager.clear();
-            entityManager.close();
+         entityManager.close();
          if (c.equals(Tranvia.class))
         {
            
-//            Query q = entityManager.createQuery("select u from TranviaEntity  ASC");
-//            List<TranviaEntity> tranvias = q.getResultList();
-//            ArrayList dtos = new ArrayList();
-//            for (TranviaEntity tranvia : tranvias) {
-//                dtos.add(TransformadorEntityDto.getInstance().EntityADtoTranvia(tranvia));
-//            }
             return new ArrayList();
         
         } 

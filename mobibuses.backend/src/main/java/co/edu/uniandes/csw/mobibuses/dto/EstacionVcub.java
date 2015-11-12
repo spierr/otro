@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.mobibuses.dto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,7 +16,7 @@ public class EstacionVcub {
     
     private long id;
     
-    private ArrayList<Vcub> vcubsEstacion;
+    private List<Vcub> vcubsEstacion;
     
     private double longitudEstacion;
     
@@ -39,7 +40,7 @@ public class EstacionVcub {
         this.id = id;
     }
 
-    public ArrayList<Vcub> getVcubsEstacion() {
+    public List<Vcub> getVcubsEstacion() {
         return vcubsEstacion;
     }
 

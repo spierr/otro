@@ -22,7 +22,7 @@ public class RutaEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     
     private int distancia;
     
@@ -59,13 +59,14 @@ public class RutaEntity implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+   @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-
-   
-    @Override
+       @Override
     public String toString() {
         return "co.edu.uniandes.csw.mueblesdelosalpes.persistencia.mock.RutaEntity[ id=" + id + " ]";
     }

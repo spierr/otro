@@ -260,7 +260,7 @@ public class TransformadorEntityDto {
          en.setLatitudEstacion(dto.getLatitudEstacion());
          en.setLongitudEstacion(dto.getLongitudEstacion());
          en.setPrestados(dto.getPrestados());
-         ArrayList<Vcub> arr= dto.getVcubsEstacion();
+         List<Vcub> arr= dto.getVcubsEstacion();
          ArrayList<VcubEntity> arr1 = new ArrayList();
          for(Vcub vc : arr)
          {
