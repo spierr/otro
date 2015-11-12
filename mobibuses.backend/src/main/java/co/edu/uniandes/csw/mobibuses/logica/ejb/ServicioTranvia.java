@@ -82,7 +82,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
     @Override
     public void cambiarEstado(String id, int emergencia, int valor, String token) {
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
      }
@@ -115,7 +115,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
     @Override
     public String generarReporte(String token) {
-      Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+      Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE  u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
          return "Error de autenticaciòn";
@@ -305,7 +305,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
     @Override
     public void cambiarCoord(String id, double co1, double co2, String token) {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
      }

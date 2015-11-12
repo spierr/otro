@@ -125,7 +125,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public Vcub alquilarVcub(int IDestacion, String token) throws OperacionInvalidaException
     {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"' ");
      if(qu.getResultList().size()==0)
      {
          return null;
@@ -172,7 +172,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public Vcub liberarVcub(int IDestacion,int IDdevolver, String token) throws OperacionInvalidaException 
     {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
          return null;
@@ -228,7 +228,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
 
     @Override
     public void reducirVcubesTodas( String token) {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
      }
@@ -262,7 +262,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
 
     @Override
     public void reducirVcubesEspecifica(int IDestacion, String token) {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
         
@@ -361,7 +361,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public Vcub modificarPosVcub(int idVcub, double longitud, double latitud, String token) 
     {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
          return null;

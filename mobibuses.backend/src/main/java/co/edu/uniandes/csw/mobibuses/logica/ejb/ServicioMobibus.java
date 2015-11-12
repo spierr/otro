@@ -196,7 +196,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     @Override
     public Mobibus cambiarKilo(int id, double kilo,String token) {
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and  u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
          return null;
@@ -213,7 +213,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public List<Mobibus> darMobibusMasCercanoBono(double cordenada1, double cordenada2, String token) {
        
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(qu.getResultList().size()==0)
      {
          return new ArrayList();
