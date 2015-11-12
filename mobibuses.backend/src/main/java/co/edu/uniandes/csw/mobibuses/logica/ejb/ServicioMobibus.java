@@ -46,13 +46,13 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     
     @Override
     public List<Mobibus> darMobibuses(String token) {
-        Query qu = em.createQuery(TOKEN+token+"'");
+        /*Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
         return new ArrayList();
          
      }
-     else
+     else*/
      {
             Query q = em.createQuery("SELECT u from MobiBusEntity u");
             List<MobiBusEntity> tranvias = q.getResultList();
@@ -70,12 +70,12 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2,String token) {
     
-        Query qu = em.createQuery(TOKEN+token+"'");
+       /* Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return null;
      }
-     else
+     else*/
      {
         List<Mobibus> lista = darMobibuses1();
         
@@ -142,12 +142,12 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public String darReporteRutas(int pId,String token) {
        // Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
-        Query qu = em.createQuery(TOKEN+token+"'");
+        /*Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return null;
      }
-     else
+     else*/
      {
         Mobibus mb =null;
         String x="";
@@ -165,8 +165,8 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     @Override
     public void eliminarRuta(int idMobibus, int idRuta,String token) {
-        Query qu = em.createQuery(TOKEN+token+"'");
-     if(!qu.getResultList().isEmpty())
+       /* Query qu = em.createQuery(TOKEN+token+"'");
+     if(!qu.getResultList().isEmpty())*/
      {
         RutaEntity r = em.find(RutaEntity.class, idRuta);
         em.remove(r);
@@ -176,12 +176,12 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     @Override
     public Mobibus cambiarPosicion(int id, double longi, double lat,String token) {
-        Query qu = em.createQuery(TOKEN+token+"'");
+        /*Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return null;
      }
-     else
+     else*/
      {
         MobiBusEntity mb = em.find(MobiBusEntity.class, id);
         mb.setPosicionLatitud(lat);
@@ -193,12 +193,12 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     @Override
     public Mobibus cambiarKilo(int id, double kilo,String token) {
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and  u.token ='"+token+"'");
+        /*Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and  u.token ='"+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return null;
      }
-     else
+     else*/
      {
         MobiBusEntity mb = em.find(MobiBusEntity.class, id);
         mb.setKilometraje(kilo);
@@ -210,12 +210,12 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public List<Mobibus> darMobibusMasCercanoBono(double cordenada1, double cordenada2, String token) {
        
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
+       /* Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return new ArrayList();
      }
-     else
+     else*/
      {
         List<Mobibus> dtos = new ArrayList();
         

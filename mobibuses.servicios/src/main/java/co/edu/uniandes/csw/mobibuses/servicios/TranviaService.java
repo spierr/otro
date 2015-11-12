@@ -33,7 +33,11 @@ public class TranviaService {
      
     public List<Tranvia> getTodosLosUsuarios(@Context HttpHeaders headers) 
     {    
-       String token = headers.getRequestHeader(TOKEN ).get(0);
+       String token = "";
+         try {
+             token = headers.getRequestHeader(TOKEN ).get(0);
+         } catch (Exception e) {
+         }
        return tranviaEjb.darTranvias(token);
  
     }
@@ -44,7 +48,11 @@ public class TranviaService {
     
     public void cambiarNiveleDeEmergencia(@PathParam("id")String id ,@PathParam("emergencia") int emergenci , @PathParam("valor")int valor, @Context HttpHeaders headers )
     {
-         String token = headers.getRequestHeader(TOKEN ).get(0);
+          String token = "";
+         try {
+             token = headers.getRequestHeader(TOKEN ).get(0);
+         } catch (Exception e) {
+         }
         
         tranviaEjb.cambiarEstado(id, emergenci, valor,token);
         
@@ -54,7 +62,11 @@ public class TranviaService {
     @Path("tranvias/generarReportes")
     public String generarReporteDeTranvias( @Context HttpHeaders headers)
     {
-         String token = headers.getRequestHeader(TOKEN ).get(0);
+          String token = "";
+         try {
+             token = headers.getRequestHeader(TOKEN ).get(0);
+         } catch (Exception e) {
+         }
         return tranviaEjb.generarReporte(token);
         
     }
@@ -64,7 +76,11 @@ public class TranviaService {
     @Path("tranvias/cambiarCoor/{id}/{coordenada1}/{coordenada2}")
     public void cambiarCoordenadas(@PathParam("id") String id,@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2,@Context HttpHeaders headers)
     {
-         String token = headers.getRequestHeader(TOKEN ).get(0);
+          String token = "";
+         try {
+             token = headers.getRequestHeader(TOKEN ).get(0);
+         } catch (Exception e) {
+         }
          tranviaEjb.cambiarCoord(id,coordenada1,coordenada2,token);
 
     }

@@ -55,13 +55,13 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     
     public List<Tranvia> darTranvias(String token) 
     {
-     Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+     /*Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return new ArrayList();
         
      }
-     else
+     else*/
      {
     Query q = em.createQuery("SELECT u FROM TranviaEntity u");
      List<TranviaEntity> l = q.getResultList();
@@ -78,8 +78,8 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
     @Override
     public void cambiarEstado(String id, int emergencia, int valor, String token) {
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
-     if(!qu.getResultList().isEmpty())
+       /* Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
+     if(!qu.getResultList().isEmpty())*/
      {
    TranviaEntity tranvia =em.find(TranviaEntity.class, id);
          
@@ -108,12 +108,12 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
     @Override
     public String generarReporte(String token) {
-      Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE  u.token ='"+token+"'");
+      /*Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE  u.token ='"+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return "Error de autenticaciòn";
      }
-     else
+     else*/
      {
     String rta="";
     
@@ -299,8 +299,8 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
 
     @Override
     public void cambiarCoord(String id, double co1, double co2, String token) {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
-     if( !qu.getResultList().isEmpty())
+        /* Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
+     if( !qu.getResultList().isEmpty())*/
      {
           TranviaEntity tranvia =em.find(TranviaEntity.class, Long.parseLong(id));
          tranvia.setPosicionLatitud(co1);
