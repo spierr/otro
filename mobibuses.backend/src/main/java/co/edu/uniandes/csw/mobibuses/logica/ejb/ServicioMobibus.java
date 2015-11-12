@@ -38,7 +38,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     public ServicioMobibus()
     {
         em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-      if(darMobibuses1().size()==0)
+      if(darMobibuses1().isEmpty())
           TransformadorEntityDto.getInstance().crearMobibibuses(em);
   
     }
@@ -46,16 +46,16 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public List<Mobibus> darMobibuses(String token) {
         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty())
      {
-         ArrayList<Mobibus> dtos = new ArrayList();
+         List<Mobibus> dtos = new ArrayList();
          return dtos;
      }
      else
      {
             Query q = em.createQuery("SELECT u from MobiBusEntity u");
             List<MobiBusEntity> tranvias = q.getResultList();
-            ArrayList<Mobibus> dtos = new ArrayList();
+            List<Mobibus> dtos = new ArrayList();
             for (MobiBusEntity tranvia : tranvias) {
                 dtos.add(TransformadorEntityDto.getInstance().EntityADtoMobibus(tranvia));
             }
@@ -70,7 +70,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2,String token) {
     
         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty())
      {
          return null;
      }
@@ -142,7 +142,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     public String darReporteRutas(int pId,String token) {
        // Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty())
      {
          return null;
      }
@@ -150,7 +150,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
      {
         Mobibus mb =null;
         String x="";
-        ArrayList<Ruta> rutas= mb.getRutas();
+        List<Ruta> rutas= mb.getRutas();
        for (int i = 0; i < rutas.size(); i++) {
             Ruta a=rutas.get(i);
            
@@ -165,12 +165,8 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public void eliminarRuta(int idMobibus, int idRuta,String token) {
         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty()==false)
      {
-     }
-     else
-     {
-        MobiBusEntity mb = em.find(MobiBusEntity.class, idMobibus);
         RutaEntity r = em.find(RutaEntity.class, idRuta);
         em.remove(r);
      }
@@ -180,7 +176,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public Mobibus cambiarPosicion(int id, double longi, double lat,String token) {
         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty())
      {
          return null;
      }
@@ -197,7 +193,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public Mobibus cambiarKilo(int id, double kilo,String token) {
         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and  u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty())
      {
          return null;
      }
@@ -214,13 +210,13 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     public List<Mobibus> darMobibusMasCercanoBono(double cordenada1, double cordenada2, String token) {
        
         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty())
      {
          return new ArrayList();
      }
      else
      {
-        ArrayList<Mobibus> dtos = new ArrayList();
+        List<Mobibus> dtos = new ArrayList();
         
          List<Mobibus> lista = darMobibuses1();
         

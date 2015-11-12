@@ -66,6 +66,18 @@ public class RutaEntity implements Serializable {
         return hash;
     }
 
+   @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof RutaEntity)) {
+            return false;
+        }
+        RutaEntity other = (RutaEntity) object;
+        if (this.id==other.id) {
+            return false;
+        }
+        return true;
+    }
+
        @Override
     public String toString() {
         return "co.edu.uniandes.csw.mueblesdelosalpes.persistencia.mock.RutaEntity[ id=" + id + " ]";

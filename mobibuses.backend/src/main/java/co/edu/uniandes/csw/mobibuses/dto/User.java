@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.mobibuses.dto;
 
 /**
@@ -21,9 +16,9 @@ public class User {
     
     private String token;
     
-    public final static String ADMIN = "admin";
+    public static final String ADMIN = "admin";
     
-public final static String USER = "user";
+public static final String USERNAME = "user";
     
    
     public User()

@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.mobibuses.dto;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -28,7 +28,7 @@ public class Mobibus {
     
     private String fechaReservacion;
     
-     private static ArrayList<Ruta> rutas;
+     private static List<Ruta> rutas;
 
     public Mobibus(String nombreP1,double posicionLatitudP, double posicionLongitudP,double pKilometraje, String pFecha,long pID)
     {
@@ -58,7 +58,7 @@ public class Mobibus {
        rutas.remove(pRuta);
    }
     
-   public ArrayList<Ruta> getRutas()
+   public List<Ruta> getRutas()
    {
        return rutas;
    }

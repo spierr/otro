@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.mobibuses.dto;
 
 import java.util.ArrayList;
@@ -44,7 +39,7 @@ public class EstacionVcub {
         return vcubsEstacion;
     }
 
-    public void setVcubsEstacion(ArrayList<Vcub> vcubsEstacion) {
+    public void setVcubsEstacion(List<Vcub> vcubsEstacion) {
         this.vcubsEstacion = vcubsEstacion;
     }
 

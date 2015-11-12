@@ -54,9 +54,9 @@ public class TransformadorEntityDto {
         UserEntity user = new UserEntity();
         user.setId(new Long(1));
         user.setPassword("pollitas");
-        user.setRol(User.USER);
+        user.setRol(User.USERNAME);
         user.setToken(null);
-        user.setUsuario(User.USER);
+        user.setUsuario(User.USERNAME);
         
         try {
                          
