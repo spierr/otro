@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.edu.uniandes.csw.mobibuses.servicios;
-
-
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioTranviaLocal;
 import java.util.List;
@@ -21,11 +15,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
-/**
- *
- * @author fj.ricaurte10
- */
-
 @Path("/Tranvia")
 @Stateless
 @Consumes(MediaType.APPLICATION_JSON)
@@ -33,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 public class TranviaService {
     
-   
+   private static final String TOKEN ="token";
     
      @EJB
     private IServicioTranviaLocal tranviaEjb;
@@ -44,7 +33,7 @@ public class TranviaService {
      
     public List<Tranvia> getTodosLosUsuarios(@Context HttpHeaders headers) 
     {    
-       String token = headers.getRequestHeader("token").get(0);
+       String token = headers.getRequestHeader(TOKEN ).get(0);
        return tranviaEjb.darTranvias(token);
  
     }
@@ -55,7 +44,7 @@ public class TranviaService {
     
     public void cambiarNiveleDeEmergencia(@PathParam("id")String id ,@PathParam("emergencia") int emergenci , @PathParam("valor")int valor, @Context HttpHeaders headers )
     {
-         String token = headers.getRequestHeader("token").get(0);
+         String token = headers.getRequestHeader(TOKEN ).get(0);
         
         tranviaEjb.cambiarEstado(id, emergenci, valor,token);
         
@@ -65,7 +54,7 @@ public class TranviaService {
     @Path("tranvias/generarReportes")
     public String generarReporteDeTranvias( @Context HttpHeaders headers)
     {
-         String token = headers.getRequestHeader("token").get(0);
+         String token = headers.getRequestHeader(TOKEN ).get(0);
         return tranviaEjb.generarReporte(token);
         
     }
@@ -75,7 +64,7 @@ public class TranviaService {
     @Path("tranvias/cambiarCoor/{id}/{coordenada1}/{coordenada2}")
     public void cambiarCoordenadas(@PathParam("id") String id,@PathParam("coordenada1") double coordenada1,@PathParam("coordenada2")double coordenada2,@Context HttpHeaders headers)
     {
-         String token = headers.getRequestHeader("token").get(0);
+         String token = headers.getRequestHeader(TOKEN ).get(0);
          tranviaEjb.cambiarCoord(id,coordenada1,coordenada2,token);
 
     }

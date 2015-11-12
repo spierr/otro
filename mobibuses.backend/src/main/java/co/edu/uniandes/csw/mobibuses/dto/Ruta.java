@@ -16,14 +16,14 @@ public class Ruta {
     
     private int distancia;
     
-    private int tiempò;
+    private int tiempo;
     
     
     public Ruta(int pDistancia, int pTiempo, long pId)
     {
         distancia=pDistancia;
         
-        tiempò=pTiempo;
+        tiempo=pTiempo;
         id=pId;
     }
     
@@ -34,7 +34,7 @@ public class Ruta {
     
     public int getTiempo()
     {
-        return tiempò;
+        return tiempo;
     }
     
     public long getID()

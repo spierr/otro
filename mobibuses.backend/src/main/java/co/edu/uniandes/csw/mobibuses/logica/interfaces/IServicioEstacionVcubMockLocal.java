@@ -21,25 +21,25 @@ public interface IServicioEstacionVcubMockLocal
     public List<EstacionVcub> darEstacionesVcub( String token);
     
     
-    public List<Vcub> darVcubesEstacion(int IDestacion, String token);
+    public List<Vcub> darVcubesEstacion(int idestacion, String token);
     
     public List<Vcub> darTodosVcub(String token);
     
     public List<Vcub> darTodosVcub1();
     
-    public Vcub alquilarVcub(int IDestacion, String token)throws OperacionInvalidaException;
+    public Vcub alquilarVcub(int idestacion, String token)throws OperacionInvalidaException;
     
-    public Vcub liberarVcub(int IDestacion,int IDdevolver, String token) throws OperacionInvalidaException;
+    public Vcub liberarVcub(int idestacion,int iddevolver, String token) throws OperacionInvalidaException;
     
     public void reducirVcubesTodas( String token);
     
-    public void reducirVcubesEspecifica(int IDestacion, String token);
+    public void reducirVcubesEspecifica(int idestacion, String token);
     
-    public List<Vcub> darVcubesDisponiblesEstacion(int IDestacion, String token);
+    public List<Vcub> darVcubesDisponiblesEstacion(int idestacion, String token);
     
-    public List<Vcub> darVcubesOcupadosEstacion(int IDestacion, String token);
+    public List<Vcub> darVcubesOcupadosEstacion(int idestacion, String token);
     
-    public List<Vcub> darVcubesNoDisponiblesEstacion(int IDestacion, String token);
+    public List<Vcub> darVcubesNoDisponiblesEstacion(int idestacion, String token);
     
     public Vcub modificarPosVcub(int idVcub, double longitud, double latitud, String token);
 }

@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.mobibuses.persistencia.mock;
 
 import co.edu.uniandes.csw.mobibuses.dto.EstacionVcub;
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
-import co.edu.uniandes.csw.mobibuses.dto.Ruta;
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.dto.User;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
@@ -30,16 +29,16 @@ public class TransformadorEntityDto {
     public static final TransformadorEntityDto t= new TransformadorEntityDto();
      public static final int NUMERO_ESTACIONES= 20;
  
-    
+    private TransformadorEntityDto () {
+        
+    }
      public static TransformadorEntityDto getInstance() {
  
         return t;
     }
  
  
-    private TransformadorEntityDto () {
-        
-    }
+    
     
     
     public void crearUsuarios(EntityManager entityManager)

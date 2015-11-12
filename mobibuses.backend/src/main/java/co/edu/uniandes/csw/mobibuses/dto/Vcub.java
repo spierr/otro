@@ -11,9 +11,9 @@ package co.edu.uniandes.csw.mobibuses.dto;
  */
 public class Vcub {
     
-    public final static String OCUPADO = "OCUPADO";
-    public final static String DISPONIBLE = "DISPONIBLE";
-    public final static String NO_DISPONIBLE = "NO DISPONIBLE";
+    public static final  String OCUPADO = "OCUPADO";
+    public  static final  String DISPONIBLE = "DISPONIBLE";
+    public static final String NO_DISPONIBLE = "NO DISPONIBLE";
     
     private long id;
     

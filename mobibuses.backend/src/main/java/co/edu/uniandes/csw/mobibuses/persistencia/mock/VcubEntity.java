@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.mobibuses.persistencia.mock;
 
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.EstacionVcubEntity;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.EstacionVcubEntity;
 import java.io.Serializable;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
@@ -84,7 +83,6 @@ public class VcubEntity implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof VcubEntity)) {
             return false;
         }

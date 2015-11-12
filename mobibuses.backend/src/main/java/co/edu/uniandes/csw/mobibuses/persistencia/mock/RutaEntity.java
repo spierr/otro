@@ -51,8 +51,8 @@ public class RutaEntity implements Serializable {
         return tiempo;
     }
 
-    public void setTiempo(int tiempò) {
-        this.tiempo = tiempò;
+    public void setTiempo(int tiemp) {
+        this.tiempo = tiemp;
     }
 
     public long getId() {

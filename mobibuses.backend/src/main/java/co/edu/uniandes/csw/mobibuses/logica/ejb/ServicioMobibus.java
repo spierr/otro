@@ -33,6 +33,8 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     
        @PersistenceContext
     private EntityManager em;
+       
+       private static final String TOKEN ="SELECT u FROM UserEntity u WHERE u.token ='";
 
     public ServicioMobibus()
     {
@@ -44,11 +46,11 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     
     @Override
     public List<Mobibus> darMobibuses(String token) {
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+        Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
-         List<Mobibus> dtos = new ArrayList();
-         return dtos;
+        return new ArrayList();
+         
      }
      else
      {
@@ -68,7 +70,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2,String token) {
     
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+        Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return null;
@@ -140,7 +142,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     @Override
     public String darReporteRutas(int pId,String token) {
        // Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+        Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return null;
@@ -163,8 +165,8 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     @Override
     public void eliminarRuta(int idMobibus, int idRuta,String token) {
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().isEmpty()==false)
+        Query qu = em.createQuery(TOKEN+token+"'");
+     if(!qu.getResultList().isEmpty())
      {
         RutaEntity r = em.find(RutaEntity.class, idRuta);
         em.remove(r);
@@ -174,7 +176,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     @Override
     public Mobibus cambiarPosicion(int id, double longi, double lat,String token) {
-        Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
+        Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
          return null;

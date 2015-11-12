@@ -31,6 +31,9 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
        
        private static final String CTOKEN ="SELECT u FROM UserEntity u WHERE u.token ='";
      
+       private static final String VCUBSQL = "SELECT v from VcubEntity v WHERE  v.estacionVcub.id = ";
+       
+       private static final String ADMINTOKENSQL ="SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='";
     
     public ServicioEstacionVcub() {
         em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
@@ -67,7 +70,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
      else
      {
-        Query q = em.createQuery("SELECT v from VcubEntity v WHERE v.estacionVcub.id = "+idestacion);
+        Query q = em.createQuery(VCUBSQL+idestacion);
         List<VcubEntity> vce =q.getResultList();
         List<Vcub> dtos = new ArrayList();
         for(VcubEntity vc : vce)
@@ -114,7 +117,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public Vcub alquilarVcub(int idestacion, String token) throws OperacionInvalidaException
     {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"' ");
+         Query qu = em.createQuery( ADMINTOKENSQL +token+"' ");
      if( qu.getResultList().isEmpty())
      {
          return null;
@@ -124,7 +127,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         Long ide = new Long(idestacion);
         EstacionVcubEntity este = em.find(EstacionVcubEntity.class, ide);
         Vcub resp = null;
-        List<VcubEntity> vcubes = em.createQuery("SELECT v from VcubEntity v WHERE  v.estacionVcub.id = "+ide ).getResultList();
+        List<VcubEntity> vcubes = em.createQuery(VCUBSQL+ide ).getResultList();
          for (VcubEntity actual : vcubes) {
              if(actual.getOcupado().equals(Vcub.DISPONIBLE))
              {
@@ -160,7 +163,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public Vcub liberarVcub(int idestacion,int iddevolver, String token) throws OperacionInvalidaException 
     {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
+         Query qu = em.createQuery( ADMINTOKENSQL +token+"'");
      if( qu.getResultList().isEmpty())
      {
          return null;
@@ -175,7 +178,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         Vcub devuelto =null;
         if(estValquilo.getId()==est.getId())
         {
-            List<VcubEntity> vcubes = em.createQuery("SELECT v from VcubEntity v WHERE  v.estacionVcub.id = "+est.getId() ).getResultList();
+            List<VcubEntity> vcubes = em.createQuery(VCUBSQL+est.getId() ).getResultList();
             for (VcubEntity vc : vcubes) {
                 if(vc.getId()==vcd.getId())
                 {
@@ -191,8 +194,8 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         }
         else
         {
-            List<VcubEntity> nueva = em.createQuery("SELECT v from VcubEntity v WHERE  v.estacionVcub.id = "+est.getId() ).getResultList();
-            List<VcubEntity> vieja = em.createQuery("SELECT v from VcubEntity v WHERE  v.estacionVcub.id = "+estValquilo.getId() ).getResultList();
+            List<VcubEntity> nueva = em.createQuery(VCUBSQL+est.getId() ).getResultList();
+            List<VcubEntity> vieja = em.createQuery(VCUBSQL+estValquilo.getId() ).getResultList();
             vieja.remove(vcd);
             vcd.setOcupado(Vcub.DISPONIBLE);
             vcd.setEstacionVcub(est);
@@ -216,7 +219,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
 
     @Override
     public void reducirVcubesTodas( String token) {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
+         Query qu = em.createQuery( ADMINTOKENSQL +token+"'");
      if( !qu.getResultList().isEmpty())
      {
         Query q = em.createQuery("SELECT u from EstacionVcubEntity u");
@@ -226,7 +229,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             int numero30 = (int) (est.getvCubs().size()*(0.3));
             int j = 0 ;
             int index = 0 ;
-            List<VcubEntity> vcubes = em.createQuery("SELECT v from VcubEntity v WHERE  v.estacionVcub.id = "+est.getId() ).getResultList();
+            List<VcubEntity> vcubes = em.createQuery(VCUBSQL+est.getId() ).getResultList();
             while(j<=numero30 && index<vcubes.size())
             {
                 VcubEntity actual = vcubes.get(index);
@@ -247,14 +250,14 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
 
     @Override
     public void reducirVcubesEspecifica(int idestacion, String token) {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
+         Query qu = em.createQuery( ADMINTOKENSQL +token+"'");
      if( !qu.getResultList().isEmpty())
      {
          EstacionVcubEntity est = em.find(EstacionVcubEntity.class,new Long( idestacion));
                     int numero30 = (int) (est.getvCubs().size()*(0.3));
             int j = 0 ;
             int index = 0 ;
-           List<VcubEntity> vcubes = em.createQuery("SELECT v from VcubEntity v WHERE  v.estacionVcub.id = "+est.getId() ).getResultList();
+           List<VcubEntity> vcubes = em.createQuery(VCUBSQL+est.getId() ).getResultList();
             while(j<=numero30 && index<vcubes.size())
             {
                 VcubEntity actual = vcubes.get(index);
@@ -342,7 +345,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
     @Override
     public Vcub modificarPosVcub(int idVcub, double longitud, double latitud, String token) 
     {
-         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
+         Query qu = em.createQuery( ADMINTOKENSQL +token+"'");
      if( qu.getResultList().isEmpty())
      {
          return null;
@@ -352,7 +355,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         Long idvc = new Long(idVcub);
         VcubEntity vc = em.find(VcubEntity.class, idvc);
         EstacionVcubEntity evc = em.find(EstacionVcubEntity.class, new Long(vc.getEstacionVcub().getId()));
-        List<VcubEntity> arr = em.createQuery("SELECT v from VcubEntity v WHERE  v.estacionVcub.id = "+evc.getId() ).getResultList();
+        List<VcubEntity> arr = em.createQuery(VCUBSQL+evc.getId() ).getResultList();
         Vcub r = null;
         for (VcubEntity arr1 : arr)
         {

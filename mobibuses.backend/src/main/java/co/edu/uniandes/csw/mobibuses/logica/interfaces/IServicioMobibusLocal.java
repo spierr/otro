@@ -6,8 +6,6 @@
 package co.edu.uniandes.csw.mobibuses.logica.interfaces;
 
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
-import co.edu.uniandes.csw.mobibuses.dto.Ruta;
-import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import java.util.List;
 import javax.ejb.Local;
@@ -34,7 +32,7 @@ public interface IServicioMobibusLocal {
       
       public void liberarMobibus(int id,String token) throws OperacionInvalidaException;
       
-      public void agregarRuta(int idMobibus, int pDist, int Ptiempo,String token);
+      public void agregarRuta(int idMobibus, int pDist, int ptiempo,String token);
       
       public void eliminarRuta(int idMobibus, int idRuta,String token);
       
