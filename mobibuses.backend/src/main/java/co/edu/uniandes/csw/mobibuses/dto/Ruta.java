@@ -27,15 +27,32 @@ public class Ruta {
         id=pId;
     }
     
+    /**
+     * da la distcion de una ruta
+     * @return distancia de la ruta
+     */
+    
     public int getDistancia()
     {
         return distancia;
     }
     
+    
+    /**
+     * da el tiempo de la ruta
+     * @return tiepo d ela ruta
+     */
+    
     public int getTiempo()
     {
         return tiempo;
     }
+    
+    
+    /**
+     * da el id de la ruta
+     * @return id de la ruta
+     */
     
     public long getID()
     {
