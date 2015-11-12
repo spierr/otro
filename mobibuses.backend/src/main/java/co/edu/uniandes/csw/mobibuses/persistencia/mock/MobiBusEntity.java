@@ -103,8 +103,8 @@ public class MobiBusEntity implements Serializable {
         return rutas;
     }
 
-    public void setRutas(Set<RutaEntity> rutas) {
-        this.rutas = rutas;
+    public void setRutas(RutaEntity rutas) {
+        this.rutas.add(rutas);
     }
 
     

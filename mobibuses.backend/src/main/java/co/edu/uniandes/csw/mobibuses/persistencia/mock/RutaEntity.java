@@ -27,6 +27,10 @@ public class RutaEntity implements Serializable {
     private int distancia;
     
     private int tiempo;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
      @ManyToOne(cascade=ALL)
     private MobiBusEntity mobibus;

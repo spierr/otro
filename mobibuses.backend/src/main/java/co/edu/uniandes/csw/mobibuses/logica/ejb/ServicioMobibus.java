@@ -15,7 +15,9 @@ import co.edu.uniandes.csw.mobibuses.persistencia.mock.RutaEntity;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -105,43 +107,50 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     @Override
     public void alquilarMobibus(int id,String token) throws OperacionInvalidaException {
-//        Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
-//        if(mb.getReservado()==false)
-//        {
-//            mb.setReservado(true);
-//        }
-//        else
-//        {
-//            throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra reservado.");
-//        }
+    MobiBusEntity mb = em.find(MobiBusEntity.class, id);
+        if(mb.isReservado())
+        {
+            mb.setReservado(true);
+        }
+        else
+        {
+            throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra reservado.");
+        }
     }
 
     @Override
     public void liberarMobibus(int id,String token) throws OperacionInvalidaException {
-//         Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, id);
-//        if(mb.getReservado()==true)
-//        {
-//            mb.setReservado(false);
-//        }
-//        else
-//        {
-//            throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra desocupado.");
-//        }
+  MobiBusEntity mb = em.find(MobiBusEntity.class, id);
+        if(mb.isReservado()==true)
+        {
+            mb.setReservado(false);
+        }
+        else
+        {
+            throw new OperacionInvalidaException("El Mobibus con id "+id+ " se encuentra desocupado.");
+        }
+
     }
 
     
     @Override
     public void agregarRuta(int  pId, int pDist, int pTiempo,String token ) {
-//   Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
-//   int g=mb.getRutas().size();
-//   Ruta ruta = new Ruta(pDist, pTiempo,g+1);
-//        mb.agregarRuta(ruta);
+
+  MobiBusEntity mb = em.find(MobiBusEntity.class, pId);
+   long g=mb.getRutas().size();
+   RutaEntity ruta = new RutaEntity();
+   ruta.setDistancia(pDist);
+   ruta.setTiempo(pTiempo);
+   ruta.setId(g+1);
+   
+   
+        mb.setRutas(ruta);
     }
     
 
     @Override
     public String darReporteRutas(int pId,String token) {
-       // Mobibus mb =(Mobibus) persistencia.findById(Mobibus.class, pId);
+     MobiBusEntity mb = em.find(MobiBusEntity.class, pId);
         /*Query qu = em.createQuery(TOKEN+token+"'");
      if(qu.getResultList().isEmpty())
      {
@@ -149,18 +158,25 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
      }
      else*/
      {
-        Mobibus mb =null;
+       
         String x="";
-        List<Ruta> rutas= mb.getRutas();
-       for (int i = 0; i < rutas.size(); i++) {
-            Ruta a=rutas.get(i);
+        Set<RutaEntity> rutas= mb.getRutas();
+       
+        Iterator<RutaEntity>  recorrer = rutas.iterator();
+        
+        
+       while(recorrer.hasNext()) {
+            RutaEntity a=recorrer.next();
            
-            x+= "La ruta " + a.getID()+" tuvo una distancia de "+a.getDistancia()+ 
+            x+= "La ruta " + a.getId()+" tuvo una distancia de "+a.getDistancia()+ 
                     " y un tiempo de " + a.getTiempo()+"<p>";
+            
+            
             
         }
         return x;
      }
+
     }
 
     @Override
