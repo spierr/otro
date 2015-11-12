@@ -41,6 +41,13 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
           TransformadorEntityDto.getInstance().crearVcubes(em);
     }
      
+    
+    /**
+     * da las estaciones
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return la lista de las estaciones
+     */
+    
     @Override
     public List<EstacionVcub> darEstacionesVcub(String token)
     {
@@ -61,6 +68,15 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
 
+    
+    
+    /**
+     * da los vcubes de una estacion
+     * @param idestacion id de la estacion en la que se desean saber los vcubes
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return lista de vcubes de una estacion
+     */
+    
     @Override
     public List<Vcub> darVcubesEstacion(int idestacion, String token) {
          /*Query qu = em.createQuery(CTOKEN+token+"'");
@@ -81,6 +97,14 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
 
+    
+    
+    /**
+     * da todos los vcubes
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return lista de todos los vcubes
+     */
+    
     @Override
     public List<Vcub> darTodosVcub(String token) 
     {
@@ -102,6 +126,13 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
     
+    
+    
+    /**
+     * da todos los vcubes
+     * @return la lista de todos los vcubes
+     */
+    
      @Override
     public List<Vcub> darTodosVcub1() {
           Query q = em.createQuery("SELECT v from VcubEntity v" );
@@ -113,6 +144,15 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         }
         return dtos;
     }
+    
+    
+    /**
+     * alquina un vcub deseado
+     * @param idestacion id de la estacion en la que se desea alquilar
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return vcub que se fue alquilado en una estacion dada
+     * @throws OperacionInvalidaException 
+     */
 
     @Override
     public Vcub alquilarVcub(int idestacion, String token) throws OperacionInvalidaException
@@ -160,6 +200,18 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      } 
     }
 
+    
+    
+    /**
+     * libera un vcub
+     * @param idestacion de la estacion en la cual se quiere liberar un vcub
+     * @param iddevolver id de la estacion donde se va a devolver el vcub
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return el vcub el cual fue liberado
+     * @throws OperacionInvalidaException 
+     */
+    
+    
     @Override
     public Vcub liberarVcub(int idestacion,int iddevolver, String token) throws OperacionInvalidaException 
     {
@@ -217,6 +269,13 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
 
+    
+    
+    /**
+     * reduce el numero de vcubes a la estacion
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     */
+    
     @Override
     public void reducirVcubesTodas( String token) {
         /* Query qu = em.createQuery( ADMINTOKENSQL +token+"'");
@@ -228,6 +287,15 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
 
+    
+    
+    
+    /**
+     * reduce el numero de vcubes a una estacion especifica
+     * @param idestacion id de la estacion a la que se quiere reducir los vcubes
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     */
+    
     @Override
     public void reducirVcubesEspecifica(int idestacion, String token) {
    /*      Query qu = em.createQuery( ADMINTOKENSQL +token+"'");
@@ -253,6 +321,14 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             em.persist(est);
      }
     }
+    
+    
+    /**
+     * da los vcubes disponibles de una estacion
+     * @param idestacion id de la estacion donde se desean buscar los vcubes disponibles
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return lista de los vcubes disponibles
+     */
 
     @Override
     public List<Vcub> darVcubesDisponiblesEstacion(int idestacion, String token) {
@@ -276,6 +352,15 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
 
+    
+    
+    /**
+     * da los vcubes ocupados de una estacion
+     * @param idestacion id de la estacion donde se desea buscar los vcubes ocupados
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return la lista de los vcubes ocupados
+     */
+    
     @Override
     public List<Vcub> darVcubesOcupadosEstacion(int idestacion, String token)
     {
@@ -298,6 +383,14 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         return sol;
      }
     }
+    
+    
+    /**
+     * da los vcubes no disponibles de una estacion
+     * @param idestacion id de la estacion donde se desea buscar los vcubes no disponibles
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return la lista de los vcubes no disponibles
+     */
 
     @Override
     public List<Vcub> darVcubesNoDisponiblesEstacion(int idestacion, String token) {
@@ -322,6 +415,18 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
 
+    
+    
+    /**
+     * modifica la posicion de un vcub
+     * @param idVcub id del vcub a modificar
+     * @param longitud longitud geografica
+     * @param latitud latitud geografica
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return  el vcub modificado
+     */
+    
+    
     @Override
     public Vcub modificarPosVcub(int idVcub, double longitud, double latitud, String token) 
     {
@@ -355,6 +460,13 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
      }
     }
 
+    
+    /**
+     * reduce la cantidad de vcubes en ciertas estaciones
+     * @param estaciones lista de las estaciones donde se quieren reducir los vcubes
+     */
+    
+    
     private void reducirVcubsAuxiliar(List<EstacionVcubEntity> estaciones) {
 
         for (EstacionVcubEntity est : estaciones) {
