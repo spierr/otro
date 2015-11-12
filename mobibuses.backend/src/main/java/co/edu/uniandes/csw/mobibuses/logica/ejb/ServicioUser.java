@@ -37,6 +37,11 @@ public class ServicioUser implements IServicioUserLocal, Serializable
           TransformadorEntityDto.getInstance().crearUsuarios(em);
     }
     
+    /**
+     * da los usuarios del sisema
+     * @return  lista d elos usuarios
+     */
+    
     @Override
     public List<User> darUsers() {
         Query q = em.createQuery("SELECT u FROM UserEntity u");
@@ -49,16 +54,35 @@ public class ServicioUser implements IServicioUserLocal, Serializable
      return ltr;
     }
 
+    
+    
+    /**
+     * registra un usuario al sistema
+     * @param u el usuario a registrar
+     */
+    
     @Override
     public void registrarUsuario(User u) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    /**
+     * modifica un usuario al sistema
+     * @param u usuario que se desea modificar
+     */
 
     @Override
     public void modificarUsuario(User u) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+    /**
+     * login
+     * @param u usuario en el q se desea hacer loggin
+     * @return  reparte un token en caso se coinsidir credenciales y rol
+     */
+    
     @Override
     public String login(User u) 
     {
