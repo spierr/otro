@@ -46,6 +46,13 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
   
     }
     
+  
+    /**
+     * metodo encargado de dar todo los mobibuses del sistema
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return una lista con todo los mobibuses del sistema
+     */
+    
     @Override
     public List<Mobibus> darMobibuses(String token) {
         /*Query qu = em.createQuery(TOKEN+token+"'");
@@ -67,7 +74,13 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     }
     
     
-    
+    /**
+     * metodo encargado de dar el mobibus mas cercano a una posicion geografica
+     * @param cordenada1 latitud geogrfica mas cercana deseada
+     * @param cordenada2 longitud geografica mas cercana deseada
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return el mobibud mas cercano a la posicion geogrfica
+     */
     
     @Override
     public Mobibus darMobibusMasCercano(double cordenada1, double cordenada2,String token) {
@@ -105,6 +118,14 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
      }
     }
 
+    /**
+     * metodo encargado de alquilar un mobibud
+     * @param id el id del mobibus deseada para alquilar
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @throws OperacionInvalidaException 
+     */
+    
+    
     @Override
     public void alquilarMobibus(int id,String token) throws OperacionInvalidaException {
     MobiBusEntity mb = em.find(MobiBusEntity.class, id);
@@ -118,6 +139,15 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
         }
     }
 
+    
+    
+    /**
+     * libera un mobibus deseado
+     * @param id id del mobibus deseado a librr
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @throws OperacionInvalidaException 
+     */   
+    
     @Override
     public void liberarMobibus(int id,String token) throws OperacionInvalidaException {
   MobiBusEntity mb = em.find(MobiBusEntity.class, id);
@@ -132,6 +162,17 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     }
 
+    
+    
+    
+    
+    /**
+     * agrega una ruta a un mobibus
+     * @param pId id del mobibus desedo 
+     * @param pDist distancia de la ruta
+     * @param pTiempo tiempo de la ruta
+     * @param token  que garantiza autenticacion del usuario para usar el servicio
+     */
     
     @Override
     public void agregarRuta(int  pId, int pDist, int pTiempo,String token ) {
@@ -148,6 +189,15 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
     }
     
 
+    
+    
+    /**
+     * da reporte de todas las rutas de un mobibus
+     * @param pId del mobibus desedo
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return  un reporte de las rutas del mobibus
+     */
+    
     @Override
     public String darReporteRutas(int pId,String token) {
      MobiBusEntity mb = em.find(MobiBusEntity.class, pId);
@@ -179,6 +229,16 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
 
     }
 
+    
+    
+    /**
+     * elimina la ruta de un mobibus
+     * @param idMobibus id del mobibus al que se desea eliminar una ruta
+     * @param idRuta id de la ruta que se desea eliminar
+     * @param token  que garantiza autenticacion del usuario para usar el servicio
+     */
+    
+    
     @Override
     public void eliminarRuta(int idMobibus, int idRuta,String token) {
        /* Query qu = em.createQuery(TOKEN+token+"'");
@@ -190,6 +250,17 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
        
     }
 
+    
+    
+    /**
+     * cambiar una posicion
+     * @param id del mobibus deseado a modificar
+     * @param longi longitud geografica
+     * @param lat latitud geografica
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return 
+     */
+    
     @Override
     public Mobibus cambiarPosicion(int id, double longi, double lat,String token) {
         /*Query qu = em.createQuery(TOKEN+token+"'");
@@ -207,6 +278,16 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
      }
     }
 
+    
+    
+    /**
+     * cambia el kilometraje de un mobibus
+     * @param id del mobibud deseado a modificar
+     * @param kilo kilometraje recorrido
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return el mobibus al que se modifico el kilometraje
+     */
+    
     @Override
     public Mobibus cambiarKilo(int id, double kilo,String token) {
         /*Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and  u.token ='"+token+"'");
@@ -223,6 +304,17 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
      }
     }
 
+    
+    
+    
+    /**
+     * da los 3 mobibuses mas cercanos a una posicion geografica
+     * @param cordenada1 latitud geografica
+     * @param cordenada2 longitud geografica
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return una lista con los 3 mobibuses mas cercanos a una posicion geografica
+     */
+    
     @Override
     public List<Mobibus> darMobibusMasCercanoBono(double cordenada1, double cordenada2, String token) {
        
@@ -302,6 +394,13 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
         
     }
 
+    
+    
+    /**
+     * da los mobibuses del sistema
+     * @return  la lista de los mobibuses
+     */
+    
     @Override
     public List<Mobibus> darMobibuses1() {
         
