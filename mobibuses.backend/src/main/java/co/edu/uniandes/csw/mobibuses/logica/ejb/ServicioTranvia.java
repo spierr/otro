@@ -39,6 +39,13 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
   
     }
     
+    
+    
+    /**
+     * da los tranvias
+     * @return lista de tranvias
+     */
+    
 
     public List<Tranvia> darTranvias1() 
     {
@@ -52,6 +59,14 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
      return ltr;
     
     }
+    
+    
+    /**
+     * da los tranvis
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return  lista de tranvias
+     */
+    
     
     public List<Tranvia> darTranvias(String token) 
     {
@@ -76,6 +91,15 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     
     }
 
+    
+    /**
+     * cambia un estado de emergencia de un tranvia
+     * @param id del tranvia al que se desea cambiar el estado
+     * @param emergencia emergencia a la que se le desea cambiar el estado
+     * @param valor nuevo valor de la emergencia
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     */
+    
     @Override
     public void cambiarEstado(String id, int emergencia, int valor, String token) {
        /* Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
@@ -106,6 +130,13 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
      }
     }
 
+    
+    /**
+     * genera un reporte de todos los tranvias
+     * @param token que garantiza autenticacion del usuario para usar el servicio
+     * @return un string que contiene todo el reporte sobre los tranvias
+     */
+    
     @Override
     public String generarReporte(String token) {
       /*Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE  u.token ='"+token+"'");
@@ -297,6 +328,16 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
      }
     }
 
+    
+    
+    /**
+     * cambia la posicion geografica de un tranvia
+     * @param id del tranvia al que se desea cambiar la posicion geografica
+     * @param co1 latidud geografica
+     * @param co2 longitud geografica
+     * @param token  que garantiza autenticacion del usuario para usar el servicio
+     */
+    
     @Override
     public void cambiarCoord(String id, double co1, double co2, String token) {
         /* Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
