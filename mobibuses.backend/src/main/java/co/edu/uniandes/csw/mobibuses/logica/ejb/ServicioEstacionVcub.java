@@ -52,7 +52,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             List<EstacionVcubEntity> estaciones = q.getResultList();
             List<EstacionVcub> dtos = new ArrayList();
             for (EstacionVcubEntity est : estaciones) {
-                dtos.add(TransformadorEntityDto.getInstance().EntityADtoEstacionVcube(est));
+                dtos.add(TransformadorEntityDto.getInstance().entityADtoEstacionVcube(est));
             }
             return dtos;
      }
@@ -72,7 +72,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         List<Vcub> dtos = new ArrayList();
         for(VcubEntity vc : vce)
         {
-            dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
+            dtos.add(TransformadorEntityDto.getInstance().entityADtoVcube(vc));
         }
         return dtos;
      }
@@ -93,7 +93,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         List<Vcub> dtos = new ArrayList();
         for(VcubEntity vc : vce)
         {
-            dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
+            dtos.add(TransformadorEntityDto.getInstance().entityADtoVcube(vc));
         }
         return dtos;
      }
@@ -106,7 +106,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
         List<Vcub> dtos = new ArrayList();
         for(VcubEntity vc : vce)
         {
-            dtos.add(TransformadorEntityDto.getInstance().EntityADtoVcube(vc));
+            dtos.add(TransformadorEntityDto.getInstance().entityADtoVcube(vc));
         }
         return dtos;
     }
@@ -129,7 +129,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
              if(actual.getOcupado().equals(Vcub.DISPONIBLE))
              {
                  actual.setOcupado(Vcub.OCUPADO);
-                 resp = TransformadorEntityDto.getInstance().EntityADtoVcube(actual);
+                 resp = TransformadorEntityDto.getInstance().entityADtoVcube(actual);
                  este.setPrestados(este.getPrestados()+1);
                  este.setvCubs(new HashSet(vcubes));
                  em.persist(actual);
@@ -179,7 +179,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             for (VcubEntity vc : vcubes) {
                 if(vc.getId()==vcd.getId())
                 {
-                    devuelto=TransformadorEntityDto.getInstance().EntityADtoVcube(vc);
+                    devuelto=TransformadorEntityDto.getInstance().entityADtoVcube(vc);
                     vc.setOcupado(Vcub.DISPONIBLE);
                     est.setPrestados(est.getPrestados()-1);
                     est.setvCubs(new HashSet(vcubes));
@@ -199,7 +199,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
             EstacionVcubEntity ant = em.find(EstacionVcubEntity.class,new Long(estValquilo.getId()));
             ant.setPrestados(ant.getPrestados()-1);
             nueva.add(vcd);
-            devuelto = TransformadorEntityDto.getInstance().EntityADtoVcube(vcd);
+            devuelto = TransformadorEntityDto.getInstance().entityADtoVcube(vcd);
             est.setvCubs(new HashSet(nueva));
             estValquilo.setvCubs(new HashSet(vieja));
            em.persist(vcd);
@@ -363,7 +363,7 @@ public class ServicioEstacionVcub implements IServicioEstacionVcubMockLocal, Ser
                 em.persist(arr1);
                 evc.setvCubs(new HashSet(arr));
                 em.persist(evc);
-                r=TransformadorEntityDto.getInstance().EntityADtoVcube(arr1);
+                r=TransformadorEntityDto.getInstance().entityADtoVcube(arr1);
                 break;
             }
         }

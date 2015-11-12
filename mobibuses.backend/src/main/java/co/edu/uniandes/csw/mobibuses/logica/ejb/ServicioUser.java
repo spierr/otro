@@ -5,12 +5,10 @@
  */
 package co.edu.uniandes.csw.mobibuses.logica.ejb;
 
-import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.dto.User;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioUserLocal;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.TranviaEntity;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.UserEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ public class ServicioUser implements IServicioUserLocal, Serializable
     public ServicioUser() 
     {
          em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-        if(darUsers().size()==0)
+        if(darUsers().isEmpty())
           TransformadorEntityDto.getInstance().crearUsuarios(em);
     }
     
@@ -43,10 +41,10 @@ public class ServicioUser implements IServicioUserLocal, Serializable
     public List<User> darUsers() {
         Query q = em.createQuery("SELECT u FROM UserEntity u");
      List<UserEntity> l = q.getResultList();
-     ArrayList<User> ltr = new ArrayList();
+     List<User> ltr = new ArrayList();
      for(UserEntity te: l)
      {
-         ltr.add(TransformadorEntityDto.getInstance().EntityADtoUser(te));
+         ltr.add(TransformadorEntityDto.getInstance().entityADtoUser(te));
      }
      return ltr;
     }

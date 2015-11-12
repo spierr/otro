@@ -13,20 +13,21 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class PersistenceManager {
-    public static final boolean DEBUG = true;
     private static final PersistenceManager singleton = new PersistenceManager();
     protected EntityManagerFactory emf;
  
+    private PersistenceManager() {
+        
+    }
+ 
+    
     public static PersistenceManager getInstance() {
  
         return singleton;
     }
  
  
-    private PersistenceManager() {
-        
-    }
- 
+    
     public EntityManagerFactory getEntityManagerFactory() {
  
         if (emf == null) {
@@ -40,16 +41,12 @@ public class PersistenceManager {
         if (emf != null) {
             emf.close();
             emf = null;
-            if (DEBUG) {
-                System.out.println("Persistence finished at " + new java.util.Date());
-            }
+            
         }
     }
  
     protected void createEntityManagerFactory() {
         this.emf = Persistence.createEntityManagerFactory("pw", System.getProperties());
-        if (DEBUG) {
-            System.out.println("Persistence started at CRISTIAN " + new java.util.Date());
-        }
+       
     }
 }

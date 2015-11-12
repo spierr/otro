@@ -9,15 +9,11 @@ import co.edu.uniandes.csw.mobibuses.dto.EstacionVcub;
 import co.edu.uniandes.csw.mobibuses.dto.Vcub;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioEstacionVcubMockLocal;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -133,11 +129,7 @@ public class EstacionVcubService
     public Vcub cambiarPosVcub(@PathParam("id") int idest,@PathParam("longitud")double longi,@PathParam("latitud") double lati,@Context HttpHeaders headers)
     {
         String token = headers.getRequestHeader("token").get(0);
-        for (int i = 0; i < 1000; i++) {
-            for (int j = 0; j < 1000; j++) {
-                int g= i+j;
-        } 
-        }
+       
         return estacionesEjb.modificarPosVcub(idest, longi, lati,token);
     }
 }

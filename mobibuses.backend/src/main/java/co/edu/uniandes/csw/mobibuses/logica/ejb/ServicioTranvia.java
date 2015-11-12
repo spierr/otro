@@ -6,18 +6,14 @@
 package co.edu.uniandes.csw.mobibuses.logica.ejb;
 
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
-import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioTranviaLocal;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.ServicioPersistenciaMock;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import co.edu.uniandes.csw.mobibuses.persistencia.mock.TranviaEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.Local;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,7 +34,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     public ServicioTranvia()
     {
         em = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-        if(darTranvias1().size()==0)
+        if(darTranvias1().isEmpty())
           TransformadorEntityDto.getInstance().crearTranvias(em);
   
     }
@@ -48,10 +44,10 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     {
     Query q = em.createQuery("SELECT u FROM TranviaEntity u");
      List<TranviaEntity> l = q.getResultList();
-     ArrayList<Tranvia> ltr = new ArrayList();
+     List<Tranvia> ltr = new ArrayList();
      for(TranviaEntity te: l)
      {
-         ltr.add(TransformadorEntityDto.getInstance().EntityADtoTranvia(te));
+         ltr.add(TransformadorEntityDto.getInstance().entityADtoTranvia(te));
      }
      return ltr;
     
@@ -60,19 +56,19 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     public List<Tranvia> darTranvias(String token) 
     {
      Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty())
      {
-         ArrayList<Tranvia> ltr = new ArrayList();
-         return ltr;
+         return new ArrayList();
+        
      }
      else
      {
     Query q = em.createQuery("SELECT u FROM TranviaEntity u");
      List<TranviaEntity> l = q.getResultList();
-     ArrayList<Tranvia> ltr = new ArrayList();
+     List<Tranvia> ltr = new ArrayList();
      for(TranviaEntity te: l)
      {
-         ltr.add(TransformadorEntityDto.getInstance().EntityADtoTranvia(te));
+         ltr.add(TransformadorEntityDto.getInstance().entityADtoTranvia(te));
      }
      return ltr;
      }
@@ -83,10 +79,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     @Override
     public void cambiarEstado(String id, int emergencia, int valor, String token) {
         Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
-     {
-     }
-     else
+     if(!qu.getResultList().isEmpty())
      {
    TranviaEntity tranvia =em.find(TranviaEntity.class, id);
          
@@ -116,7 +109,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     @Override
     public String generarReporte(String token) {
       Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE  u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
+     if(qu.getResultList().isEmpty())
      {
          return "Error de autenticaciòn";
      }
@@ -151,28 +144,23 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     int problemasTemperatura=0 ;
     int problemasPanico=0;
     int problemasChoque=0;
-    
-    
-    System.out.println("intenta el metodo");
+
     
     for(Tranvia tra:lista)
     {
-         System.out.println("entra el for");
-        
+
         rta+="El tiempo promedio del tranvia " + tra.getNombre()+ " es " + tra.getTimepoPromedio() +"<p>";
         
         //ruta A
         
-        System.out.println("el nombre de la linea es "+ tra.getLinea());
-        
-        if(tra.getLinea().equals("A") && tra.getTimepoPromedio()<tiempoMasEfectivoA)
+      
+        if("A".equals(tra.getLinea()) && tra.getTimepoPromedio()<tiempoMasEfectivoA)
         {
-            System.out.println("entro a A");
-            tiempoMasEfectivoA=tra.getTimepoPromedio();
+                        tiempoMasEfectivoA=tra.getTimepoPromedio();
             conductorMasEFectivoA=tra;
             
         }
-        if(tra.getLinea().equals("A") &&tra.getTimepoPromedio()>tiempoMenosEfectivoA)
+        if("A".equals(tra.getLinea()) &&tra.getTimepoPromedio()>tiempoMenosEfectivoA)
         {
             tiempoMenosEfectivoA=tra.getTimepoPromedio();
             conductorMenosEFectivoA=tra;
@@ -181,12 +169,12 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
         
         //ruta B
         
-         if(tra.getLinea().equals("B") && tra.getTimepoPromedio()<tiempoMasEfectivoB)
+         if("B".equals(tra.getLinea()) && tra.getTimepoPromedio()<tiempoMasEfectivoB)
         {
             tiempoMasEfectivoB=tra.getTimepoPromedio();
             conductorMasEFectivoB=tra;
         }
-        if(tra.getLinea().equals("B") &&tra.getTimepoPromedio()>tiempoMenosEfectivoB)
+        if("B".equals(tra.getLinea()) &&tra.getTimepoPromedio()>tiempoMenosEfectivoB)
         {
             tiempoMenosEfectivoB=tra.getTimepoPromedio();
             conductorMenosEFectivoB=tra;
@@ -194,18 +182,18 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
         
          //ruta C
         
-         if(tra.getLinea().equals("C") && tra.getTimepoPromedio()<tiempoMasEfectivoC)
+         if("C".equals(tra.getLinea()) && tra.getTimepoPromedio()<tiempoMasEfectivoC)
         {
             tiempoMasEfectivoC=tra.getTimepoPromedio();
             conductorMasEFectivoC=tra;
         }
-        if(tra.getLinea().equals("C") &&tra.getTimepoPromedio()>tiempoMenosEfectivoC)
+        if("C".equals(tra.getLinea()) &&tra.getTimepoPromedio()>tiempoMenosEfectivoC)
         {
             tiempoMenosEfectivoC=tra.getTimepoPromedio();
             conductorMenosEFectivoC=tra;
         }
         
-        if(tra.getLinea().equals("A"))
+        if("A".equals(tra.getLinea()))
         {
             if(tra.getNivelChoque()>50){
                 problemaTipoA++;
@@ -222,7 +210,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
             }
         }
         
-        if(tra.getLinea().equals("B"))
+        if("B".equals(tra.getLinea()))
         {
             if(tra.getNivelChoque()>50){
                 problemaTipoB++;
@@ -238,7 +226,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
             }
         }
         
-        if(tra.getLinea().equals("C"))
+        if("C".equals(tra.getLinea()))
         {
             if(tra.getNivelChoque()>50){
                 problemaTipoC++;
@@ -256,49 +244,55 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
         
     
     }
-    rta+="El conductor mas efectivo es "+ conductorMasEFectivoA.getNombre() +" con el tranvia" + conductorMasEFectivoA.getNombre()+ " con un tiempo de " + conductorMasEFectivoA.getTimepoPromedio()+"<p>";
+    String mas = "El conductor mas efectivo es ";
+    String menos = "El conductor menos efectivo es ";
+    String tran = " con el tranvia";
+    String tiempo =" con un tiempo de ";
+    rta+=mas+ conductorMasEFectivoA.getNombre() +tran + conductorMasEFectivoA.getNombre()+ tiempo + conductorMasEFectivoA.getTimepoPromedio()+"<p>";
     
-    rta+="El conductor menos efectivo es "+ conductorMenosEFectivoA.getNombre() +" con el tranvia" + conductorMenosEFectivoA.getNombre()+ " con un tiempo de " + conductorMenosEFectivoA.getTimepoPromedio()+"<p>";
+    rta+=menos+ conductorMenosEFectivoA.getNombre() +tran + conductorMenosEFectivoA.getNombre()+ tiempo + conductorMenosEFectivoA.getTimepoPromedio()+"<p>";
     
-    rta+="El conductor mas efectivo es "+ conductorMasEFectivoB.getNombre() +" con el tranvia" + conductorMasEFectivoB.getNombre()+ " con un tiempo de " + conductorMasEFectivoB.getTimepoPromedio()+"<p>";
+    rta+=mas+ conductorMasEFectivoB.getNombre() +tran + conductorMasEFectivoB.getNombre()+ tiempo+ conductorMasEFectivoB.getTimepoPromedio()+"<p>";
     
-    rta+="El conductor menos efectivo es "+ conductorMenosEFectivoB.getNombre() +" con el tranvia" + conductorMenosEFectivoB.getNombre()+ " con un tiempo de " + conductorMenosEFectivoB.getTimepoPromedio()+"<p>";
+    rta+=menos+ conductorMenosEFectivoB.getNombre() +tran + conductorMenosEFectivoB.getNombre()+ tiempo+ conductorMenosEFectivoB.getTimepoPromedio()+"<p>";
    
     
-    rta+="El conductor mas efectivo es "+ conductorMasEFectivoC.getNombre() +" con el tranvia" + conductorMasEFectivoC.getNombre()+ " con un tiempo de " + conductorMasEFectivoC.getTimepoPromedio()+"<p>";
+    rta+=mas+ conductorMasEFectivoC.getNombre() +tran+ conductorMasEFectivoC.getNombre()+ tiempo + conductorMasEFectivoC.getTimepoPromedio()+"<p>";
     
-    rta+="El conductor menos efectivo es "+ conductorMenosEFectivoC.getNombre() +" con el tranvia" + conductorMenosEFectivoC.getNombre()+ " con un tiempo de " + conductorMenosEFectivoC.getTimepoPromedio()+"<p>";
+    rta+=menos+ conductorMenosEFectivoC.getNombre() +tran + conductorMenosEFectivoC.getNombre()+ tiempo + conductorMenosEFectivoC.getTimepoPromedio()+"<p>";
    
     
    int maso =  Math.max(problemaTipoA, problemaTipoB);
    
    int mayorProblema = Math.max(maso, problemaTipoC);
    
-   rta+="El trayecto A presenta "+ problemaTipoA +" problemas <p>" ;
+   String ta = "El trayecto A presenta ";
    
-    rta+="El trayecto A presenta "+ problemaTipoB +" problemas <p>" ;
+   String pp = " problemas <p>" ;
+   
+   rta+=ta+ problemaTipoA +pp ;
+   
+    rta+=ta+ problemaTipoB +pp ;
     
-     rta+="El trayecto A presenta "+ problemaTipoC +" problemas <p>" ;
+     rta+=ta+ problemaTipoC +pp ;
      
       rta+="El trayecto que mas presenta problemas tiene "+ mayorProblema +" problemas <p>" ;
    
      int masoEmer =  Math.max(problemasChoque, problemasPanico);
    
    int mayorProblemaEmer = Math.max(masoEmer, problemasTemperatura);
-      
-   rta+="Ha habido  "+ problemasTemperatura +" emergencias por temperatura <p>" ;
    
-    rta+="Ha habido  "+ problemasChoque +" emergencias por choque <p>" ;
+   String ha = "Ha habido  ";
+      
+   rta+=ha+ problemasTemperatura +" emergencias por temperatura <p>" ;
+   
+    rta+=ha+ problemasChoque +" emergencias por choque <p>" ;
     
-     rta+="Ha habido  "+ problemasPanico +" emergencias por panico <p>" ;
+     rta+=ha+ problemasPanico +" emergencias por panico <p>" ;
      
      rta+="La emergencia mas concurrida ha sucedido "+mayorProblemaEmer + " veces" ;
      
-     
-     System.out.println(rta);
-   
-   
-   
+
     return rta ;
      }
     }
@@ -306,10 +300,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
     @Override
     public void cambiarCoord(String id, double co1, double co2, String token) {
          Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
-     if(qu.getResultList().size()==0)
-     {
-     }
-     else
+     if( !qu.getResultList().isEmpty())
      {
           TranviaEntity tranvia =em.find(TranviaEntity.class, Long.parseLong(id));
          tranvia.setPosicionLatitud(co1);

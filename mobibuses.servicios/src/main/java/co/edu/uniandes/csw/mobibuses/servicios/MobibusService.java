@@ -8,15 +8,11 @@ package co.edu.uniandes.csw.mobibuses.servicios;
 import co.edu.uniandes.csw.mobibuses.dto.Mobibus;
 import co.edu.uniandes.csw.mobibuses.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioMobibusLocal;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -123,11 +119,7 @@ public class MobibusService {
       public Mobibus modificarPos(@PathParam("id") int idest,@PathParam("longitud")double longi,@PathParam("latitud") double lati,@Context HttpHeaders headers){
           
           String token = headers.getRequestHeader("token").get(0);  
-         for (int i = 0; i < 1000; i++) {
-            for (int j = 0; j < 1000; j++) {
-                System.out.println(i+j);
-        } 
-        }
+         
           return mobibusEjb.cambiarPosicion(idest, longi, lati,token );
           
       }

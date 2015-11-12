@@ -41,27 +41,22 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     // Atributos
     //-----------------------------------------------------------
 
-   
-   
-    
-    //lista de los tranvias
-    
-    private static ArrayList<Tranvia> tranvias;
-    
+  
+       
     /**
      * Lista con los Vcubs
      */
-    private static ArrayList<Vcub> vcubes;
+    private static List<Vcub> vcubes;
     
      /**
      * Lista con los Vcubs
      */
-    private static ArrayList<Mobibus> mobibuses;
+    private static List<Mobibus> mobibuses;
     
     /**
      * Lista de Estacion Vcub
      */
-    private static ArrayList<EstacionVcub> estacionesVcub;
+    private static List<EstacionVcub> estacionesVcub;
    
     @PersistenceContext(unitName = "pw")
     public EntityManager entityManager; 
@@ -69,7 +64,13 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     //-----------------------------------------------------------
     // Constructor
     //-----------------------------------------------------------
-
+ public ServicioPersistenciaMock()
+    {
+         TransformadorEntityDto.getInstance().crearMobibibuses(entityManager);
+        TransformadorEntityDto.getInstance().crearMobibibuses(entityManager);
+        TransformadorEntityDto.getInstance().crearTranvias(entityManager);
+        TransformadorEntityDto.getInstance().crearVcubes(entityManager);                     
+    }
     /**
      * Constructor de la clase. Inicializa los atributos.
      */
@@ -77,21 +78,12 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     public void init() {
         try {
             entityManager = PersistenceManager.getInstance().getEntityManagerFactory().createEntityManager();
-            System.out.println("Se ha iniciado el entity manager Cristian"+entityManager.toString());
         } catch (Exception exp) {
            Logger.getLogger(ServicioPersistenciaMock.class.getName()).log(Level.SEVERE, null, exp);
         }
     } 
     
-    public ServicioPersistenciaMock()
-    {
- //        TransformadorEntityDto.getInstance().crearMobibibuses(entityManager);
- //       TransformadorEntityDto.getInstance().crearMobibibuses(entityManager);
-        TransformadorEntityDto.getInstance().crearTranvias(entityManager);
-        //TransformadorEntityDto.getInstance().crearVcubes(entityManager);   
-                        
-        
-    }
+   
 
     //-----------------------------------------------------------
     // Métodos
@@ -106,24 +98,21 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     {
         if(obj instanceof EstacionVcub)
         {
-            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityEstacionVcube((EstacionVcub)obj));
+            entityManager.persist(TransformadorEntityDto.getInstance().dtoAEntityEstacionVcube((EstacionVcub)obj));
         }
         else if(obj instanceof Vcub)
         {
-            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityVcube((Vcub)obj));
+            entityManager.persist(TransformadorEntityDto.getInstance().dtoAEntityVcube((Vcub)obj));
         }
         else if(obj instanceof Mobibus)
         {
-            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityMobibus((Mobibus)obj));
+            entityManager.persist(TransformadorEntityDto.getInstance().dtoAEntityMobibus((Mobibus)obj));
         }
         else if(obj instanceof Tranvia)
         {
-          entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityTranvia((Tranvia)obj));
+          entityManager.persist(TransformadorEntityDto.getInstance().dtoAEntityTranvia((Tranvia)obj));
         }
-//        else if(obj instanceof Ruta)
-//        {
-//           entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityRuta((Ruta)obj));
-//        }
+
        
     }
 
@@ -236,7 +225,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         }
         else
         {
-            return null;
+            return new ArrayList();
         }
     }
 

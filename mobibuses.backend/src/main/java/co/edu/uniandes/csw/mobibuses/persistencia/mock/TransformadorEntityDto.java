@@ -28,7 +28,7 @@ import javax.persistence.Query;
 public class TransformadorEntityDto {
     
     public static final TransformadorEntityDto t= new TransformadorEntityDto();
-     public final static int NUMERO_ESTACIONES= 20;
+     public static final int NUMERO_ESTACIONES= 20;
  
     
      public static TransformadorEntityDto getInstance() {
@@ -72,7 +72,6 @@ public class TransformadorEntityDto {
     
     public void crearMobibibuses(EntityManager entityManager){
                    
-             System.out.println("Se ha iniciado el entity manager Cristian"+entityManager.toString());
              
             for(int i = 0 ; i<250 ; i++)            {
                 
@@ -163,7 +162,7 @@ public class TransformadorEntityDto {
                
                 Tranvia x = new Tranvia("tranvia", ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto) ;
             
-                TranviaEntity en=TransformadorEntityDto.getInstance().DtoAEntityTranvia(x);
+                TranviaEntity en=TransformadorEntityDto.getInstance().dtoAEntityTranvia(x);
                 entityManager.persist(en);
           }
             Query q = entityManager.createQuery("SELECT u FROM TranviaEntity u");
@@ -175,7 +174,7 @@ public class TransformadorEntityDto {
         
     }
     public void crearVcubes(EntityManager entityManager){
-        ArrayList  estacionesVcub =null;
+        List  estacionesVcub =null;
         if(estacionesVcub==null)
         {
             estacionesVcub = new ArrayList<EstacionVcub>();
@@ -191,7 +190,7 @@ public class TransformadorEntityDto {
                      
                 
                       try {
-            entityManager.persist(TransformadorEntityDto.getInstance().DtoAEntityEstacionVcube(nueva));
+            entityManager.persist(TransformadorEntityDto.getInstance().dtoAEntityEstacionVcube(nueva));
                       
         } catch (Exception exp) {
              Logger.getLogger(TransformadorEntityDto.class.getName()).log(Level.SEVERE, null, exp);
@@ -200,7 +199,7 @@ public class TransformadorEntityDto {
                
             }
         }
-         ArrayList  vcubes= null; 
+         List  vcubes= null; 
         if(vcubes==null)
         {
             vcubes = new ArrayList<Vcub>();
@@ -227,7 +226,7 @@ public class TransformadorEntityDto {
                 
                 
                       try {
-                          VcubEntity vce = TransformadorEntityDto.getInstance().DtoAEntityVcube(nuevo);
+                          VcubEntity vce = TransformadorEntityDto.getInstance().dtoAEntityVcube(nuevo);
                           vce.setEstacionVcub(entityManager.find(EstacionVcubEntity.class,new Long(actual.getId())));
                           vce.setId(nuevo.getId());
             entityManager.persist(vce);
@@ -244,7 +243,7 @@ public class TransformadorEntityDto {
         }
     }
     
-    public VcubEntity DtoAEntityVcube(Vcub dto)
+    public VcubEntity dtoAEntityVcube(Vcub dto)
      {
        VcubEntity en= new VcubEntity();
        en.setLatitud(dto.getLatitud());
@@ -253,7 +252,7 @@ public class TransformadorEntityDto {
        en.setId(dto.getId());
        return en;  
      }
-    public EstacionVcubEntity DtoAEntityEstacionVcube(EstacionVcub dto)
+    public EstacionVcubEntity dtoAEntityEstacionVcube(EstacionVcub dto)
      {
          EstacionVcubEntity en= new EstacionVcubEntity();
          en.setId(dto.getId());
@@ -261,23 +260,18 @@ public class TransformadorEntityDto {
          en.setLongitudEstacion(dto.getLongitudEstacion());
          en.setPrestados(dto.getPrestados());
          List<Vcub> arr= dto.getVcubsEstacion();
-         ArrayList<VcubEntity> arr1 = new ArrayList();
+         List<VcubEntity> arr1 = new ArrayList();
          for(Vcub vc : arr)
          {
-             VcubEntity vce = DtoAEntityVcube(vc);
+             VcubEntity vce = dtoAEntityVcube(vc);
              arr1.add(vce);
          }
          Set<VcubEntity> set = new HashSet(arr1);
          en.setvCubs(set);
          return en;
      }
-    public RutaEntity DtoAEntityRutaEntity(Ruta dto)
-     {
-         RutaEntity en = new RutaEntity();
-         return en;
-         
-     }
-    public MobiBusEntity DtoAEntityMobibus(Mobibus dto)
+ 
+    public MobiBusEntity dtoAEntityMobibus(Mobibus dto)
      {
                 MobiBusEntity mo= new MobiBusEntity();
                 mo.setFechaReservacion(dto.getFechaReservacion());
@@ -288,24 +282,24 @@ public class TransformadorEntityDto {
                 return mo;
            
      }
-    public TranviaEntity DtoAEntityTranvia(Tranvia dto)
+    public TranviaEntity dtoAEntityTranvia(Tranvia dto)
      {
-                TranviaEntity t = new TranviaEntity();
-                t.setKilometraje(dto.getKilometraje());
-                t.setLinea(dto.getLinea());
-                t.setNivelChoque(dto.getNivelChoque());
-                t.setNivelPanico(dto.getNivelPanico());
-                t.setNivelTemperatura(dto.getNivelTemparatura());
-                t.setNombre(dto.getNombre());
-                t.setNombreConductor(dto.getNombreConductor());
-                t.setPosicionLatitud(dto.getposicionLatitud());
-                t.setPosicionLongitud(dto.getposicionLongitud());
-                t.setTiempoTrayecto(dto.getTimepoPromedio());
-                return t;
+                TranviaEntity tr = new TranviaEntity();
+                tr.setKilometraje(dto.getKilometraje());
+                tr.setLinea(dto.getLinea());
+                tr.setNivelChoque(dto.getNivelChoque());
+                tr.setNivelPanico(dto.getNivelPanico());
+                tr.setNivelTemperatura(dto.getNivelTemparatura());
+                tr.setNombre(dto.getNombre());
+                tr.setNombreConductor(dto.getNombreConductor());
+                tr.setPosicionLatitud(dto.getposicionLatitud());
+                tr.setPosicionLongitud(dto.getposicionLongitud());
+                tr.setTiempoTrayecto(dto.getTimepoPromedio());
+                return tr;
      }
     
     
-    public Vcub EntityADtoVcube(VcubEntity entity)
+    public Vcub entityADtoVcube(VcubEntity entity)
      {
          Vcub dto = new Vcub(entity.getId(), entity.getEstacionVcub().getId());
          dto.setOcupado(entity.getOcupado());
@@ -313,52 +307,48 @@ public class TransformadorEntityDto {
          dto.setLongitud(entity.getLongitud());
          return dto;
      }
-    public EstacionVcub EntityADtoEstacionVcube(EstacionVcubEntity entity)
+    public EstacionVcub entityADtoEstacionVcube(EstacionVcubEntity entity)
      {
          EstacionVcub dto = new EstacionVcub(entity.getId(), entity.getLongitudEstacion(), entity.getLatitudEstacion());
          dto.setPrestados(entity.getPrestados());
          Set<VcubEntity> set = entity.getvCubs();
-         ArrayList<Vcub> arr = new ArrayList();
+         List<Vcub> arr = new ArrayList();
         for(VcubEntity vc : set)
         {
-            Vcub n = EntityADtoVcube(vc);
+            Vcub n = entityADtoVcube(vc);
             arr.add(n);
         } 
          dto.setVcubsEstacion(arr);
          return dto;
          
      }
-    public Ruta EntityADtoRutaEntity(RutaEntity entity)
+ 
+    public Mobibus entityADtoMobibus(MobiBusEntity entity)
      {
-         Ruta dto = new Ruta(entity.getDistancia(), entity.getTiempo(), entity.getId());
-         return dto;
+         return new Mobibus(entity.getNombre(), entity.getPosicionLatitud() , entity.getPosicionLongitud(), entity.getKilometraje(), entity.getFechaReservacion(), entity.getId());
+         
      }
-    public Mobibus EntityADtoMobibus(MobiBusEntity entity)
+    public Tranvia entityADtoTranvia(TranviaEntity entity)
      {
-         Mobibus dto = new Mobibus(entity.getNombre(), entity.getPosicionLatitud() , entity.getPosicionLongitud(), entity.getKilometraje(), entity.getFechaReservacion(), entity.getId());
-         return dto;
-     }
-    public Tranvia EntityADtoTranvia(TranviaEntity entity)
-     {
-         Tranvia dto = new Tranvia(entity.getNombre(), entity.getLinea(), entity.getPosicionLatitud(), entity.getPosicionLongitud(), entity.getNivelChoque(), entity.getNivelTemperatura(), entity.getNivelPanico(), entity.getKilometraje(), entity.getNombreConductor(), entity.getTiempoTrayecto());
-         return dto;
+         return new Tranvia(entity.getNombre(), entity.getLinea(), entity.getPosicionLatitud(), entity.getPosicionLongitud(), entity.getNivelChoque(), entity.getNivelTemperatura(), entity.getNivelPanico(), entity.getKilometraje(), entity.getNombreConductor(), entity.getTiempoTrayecto());
+         
      }
 
 
-    public User EntityADtoUser(UserEntity te) {
-        User dto = new User( te.getId(), te.getUsuario(), te.getPassword(), te.getRol(), te.getToken());
-        return dto;
+    public User entityADtoUser(UserEntity te) {
+        return new User( te.getId(), te.getUsuario(), te.getPassword(), te.getRol(), te.getToken());
+        
     }
     
-    public UserEntity DtoAEntityUser (User dto)
+    public UserEntity etoAEntityUser (User dto)
      {
-                UserEntity t = new UserEntity();
-                t.setId(dto.getId());
-                t.setPassword(dto.getPassword());
-                t.setRol(dto.getRol());
-                t.setToken(dto.getToken());
-                t.setUsuario(dto.getUsuario());
-                return t;
+                UserEntity tr = new UserEntity();
+                tr.setId(dto.getId());
+                tr.setPassword(dto.getPassword());
+                tr.setRol(dto.getRol());
+                tr.setToken(dto.getToken());
+                tr.setUsuario(dto.getUsuario());
+                return tr;
      }
     
 }

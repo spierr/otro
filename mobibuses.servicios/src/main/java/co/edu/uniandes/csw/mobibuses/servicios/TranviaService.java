@@ -8,13 +8,9 @@ package co.edu.uniandes.csw.mobibuses.servicios;
 
 import co.edu.uniandes.csw.mobibuses.dto.Tranvia;
 import co.edu.uniandes.csw.mobibuses.logica.interfaces.IServicioTranviaLocal;
-import co.edu.uniandes.csw.mobibuses.persistencia.mock.PersistenceManager;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -60,11 +56,7 @@ public class TranviaService {
     public void cambiarNiveleDeEmergencia(@PathParam("id")String id ,@PathParam("emergencia") int emergenci , @PathParam("valor")int valor, @Context HttpHeaders headers )
     {
          String token = headers.getRequestHeader("token").get(0);
-         for (int i = 0; i < 1000; i++) {
-            for (int j = 0; j < 1000; j++) {
-                int g= i+j;
-        } 
-        }
+        
         tranviaEjb.cambiarEstado(id, emergenci, valor,token);
         
     }

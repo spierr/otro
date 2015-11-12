@@ -16,7 +16,6 @@ import co.edu.uniandes.csw.mobibuses.persistencia.mock.TransformadorEntityDto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -57,7 +56,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
             List<MobiBusEntity> tranvias = q.getResultList();
             List<Mobibus> dtos = new ArrayList();
             for (MobiBusEntity tranvia : tranvias) {
-                dtos.add(TransformadorEntityDto.getInstance().EntityADtoMobibus(tranvia));
+                dtos.add(TransformadorEntityDto.getInstance().entityADtoMobibus(tranvia));
             }
             return dtos;
      }
@@ -186,7 +185,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
         mb.setPosicionLatitud(lat);
         mb.setPosicionLongitud(longi);
         em.persist(mb);
-        return TransformadorEntityDto.getInstance().EntityADtoMobibus(mb);
+        return TransformadorEntityDto.getInstance().entityADtoMobibus(mb);
      }
     }
 
@@ -202,7 +201,7 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
         MobiBusEntity mb = em.find(MobiBusEntity.class, id);
         mb.setKilometraje(kilo);
         em.persist(mb);
-        return TransformadorEntityDto.getInstance().EntityADtoMobibus(mb);
+        return TransformadorEntityDto.getInstance().entityADtoMobibus(mb);
      }
     }
 
@@ -290,9 +289,9 @@ public class ServicioMobibus implements IServicioMobibusLocal, Serializable{
         
         Query q = em.createQuery("SELECT u from MobiBusEntity u");
             List<MobiBusEntity> tranvias = q.getResultList();
-            ArrayList<Mobibus> dtos = new ArrayList();
+            List<Mobibus> dtos = new ArrayList();
             for (MobiBusEntity tranvia : tranvias) {
-                dtos.add(TransformadorEntityDto.getInstance().EntityADtoMobibus(tranvia));
+                dtos.add(TransformadorEntityDto.getInstance().entityADtoMobibus(tranvia));
             }
             return dtos;
     }
