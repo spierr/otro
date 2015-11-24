@@ -78,7 +78,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
      }
      else*/
      {
-    Query q = em.createQuery("SELECT u FROM TranviaEntity u");
+    Query q = em.createQuery("SELECT u from TranviaEntity u");
      List<TranviaEntity> l = q.getResultList();
      List<Tranvia> ltr = new ArrayList();
      for(TranviaEntity te: l)
@@ -101,7 +101,7 @@ public class ServicioTranvia implements IServicioTranviaLocal, Serializable{
      */
     
     @Override
-    public void cambiarEstado(String id, int emergencia, int valor, String token) {
+    public void cambiarEstado(long id, int emergencia, int valor, String token) {
        /* Query qu = em.createQuery("SELECT u FROM UserEntity u WHERE u.rol='admin' and u.token ='"+token+"'");
      if(!qu.getResultList().isEmpty())*/
      {

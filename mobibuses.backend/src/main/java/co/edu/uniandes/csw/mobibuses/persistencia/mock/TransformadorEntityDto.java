@@ -111,7 +111,7 @@ public class TransformadorEntityDto {
     public void crearTranvias(EntityManager entityManager){
        
             
-             for(int i = 0 ; i<250 ; i++)
+             for(int i = 1 ; i<250 ; i++)
             {
                 int linea=(int)(Math.random()*3);
                 
@@ -159,17 +159,18 @@ public class TransformadorEntityDto {
                 
               String  nombreConductor="conductor"+i;
                
-                Tranvia x = new Tranvia("tranvia", ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto) ;
+                Tranvia x = new Tranvia("tranvia"+i, ruta, numero, numero2, 3, 3, 3, kilometraje,nombreConductor,tiempoTrayecto,i) ;
             
+                
+                
+               
+                
+                
+                
                 TranviaEntity en=TransformadorEntityDto.getInstance().dtoAEntityTranvia(x);
                 entityManager.persist(en);
           }
-            Query q = entityManager.createQuery("SELECT u FROM TranviaEntity u");
-            List<TranviaEntity> l = q.getResultList();
-            for (TranviaEntity tranvia:l){
-                tranvia.setNombre("tranvia"+tranvia.getId());
-                entityManager.refresh(tranvia);
-            }
+          
         
     }
     public void crearVcubes(EntityManager entityManager){
@@ -329,7 +330,7 @@ public class TransformadorEntityDto {
      }
     public Tranvia entityADtoTranvia(TranviaEntity entity)
      {
-         return new Tranvia(entity.getNombre(), entity.getLinea(), entity.getPosicionLatitud(), entity.getPosicionLongitud(), entity.getNivelChoque(), entity.getNivelTemperatura(), entity.getNivelPanico(), entity.getKilometraje(), entity.getNombreConductor(), entity.getTiempoTrayecto());
+         return new Tranvia(entity.getNombre(), entity.getLinea(), entity.getPosicionLatitud(), entity.getPosicionLongitud(), entity.getNivelChoque(), entity.getNivelTemperatura(), entity.getNivelPanico(), entity.getKilometraje(), entity.getNombreConductor(), entity.getTiempoTrayecto(),entity.getId());
          
      }
 

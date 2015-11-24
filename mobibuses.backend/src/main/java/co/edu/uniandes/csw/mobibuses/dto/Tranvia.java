@@ -14,8 +14,10 @@ public class Tranvia {
         private String nombreConductor;
         private double tiempoTrayecto ;
         
-       public Tranvia( String nombreP, String lenaPc,double posicionLatitudP, double posicionLongitudP,int nivelChoqueP,int nivelTemperaturaP, int nivelPanicoP , double kilometrajeP , String nombreConductorP,double tiempoTrayectoP)
+       public Tranvia( String nombreP, String lenaPc,double posicionLatitudP, double posicionLongitudP,int nivelChoqueP,int nivelTemperaturaP, int nivelPanicoP , double kilometrajeP , String nombreConductorP,double tiempoTrayectoP, long idP)
     {
+        
+        id=idP;
              nombre=nombreP;
           nombreConductor=nombreConductorP;
           linea=lenaPc;

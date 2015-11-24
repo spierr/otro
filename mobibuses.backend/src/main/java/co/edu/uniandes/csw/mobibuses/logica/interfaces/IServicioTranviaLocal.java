@@ -35,7 +35,7 @@ public interface IServicioTranviaLocal {
      * @param token 
      */
     
-    public void cambiarEstado(String id, int emergencia , int valor, String token);
+    public void cambiarEstado(long id, int emergencia , int valor, String token);
     
     /**
      * interface

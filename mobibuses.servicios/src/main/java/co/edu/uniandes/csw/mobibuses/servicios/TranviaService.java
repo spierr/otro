@@ -46,7 +46,7 @@ public class TranviaService {
     @PUT
     @Path("tranvias/cambiar/{id}/{emergencia}/{valor}")
     
-    public void cambiarNiveleDeEmergencia(@PathParam("id")String id ,@PathParam("emergencia") int emergenci , @PathParam("valor")int valor, @Context HttpHeaders headers )
+    public void cambiarNiveleDeEmergencia(@PathParam("id")long id ,@PathParam("emergencia") int emergenci , @PathParam("valor")int valor, @Context HttpHeaders headers )
     {
           String token = "";
          try {
